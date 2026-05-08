@@ -195,8 +195,21 @@ function Services() {
           </div>
         </div>
 
-        {/* ── Row 1 ── */}
-        <div ref={row1Ref} className="mb-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {/* ── Row 1: mobile sticky stack ── */}
+        <div className="flex flex-col sm:hidden mb-4">
+          {ROW_ONE.map((card, i) => {
+            const topPx  = 80 + (ROW_ONE.length - 1 - i) * 14
+            const zIndex = (i + 1) * 10
+            return (
+              <div key={i} className="sticky pb-3" style={{ top: topPx, zIndex }}>
+                <MobileIndustryCard card={card} />
+              </div>
+            )
+          })}
+        </div>
+
+        {/* ── Row 1: sm–lg grid ── */}
+        <div ref={row1Ref} className="hidden mb-4 sm:grid sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
           {ROW_ONE.map((card, i) => (
             <IndustryCard key={i} card={card} index={i} inView={row1InView} />
           ))}
@@ -251,8 +264,21 @@ function Services() {
           </div>
         </motion.div>
 
-        {/* ── Row 2 ── */}
-        <div ref={row2Ref} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {/* ── Row 2: mobile sticky stack ── */}
+        <div className="flex flex-col sm:hidden">
+          {ROW_TWO.map((card, i) => {
+            const topPx  = 80 + (ROW_TWO.length - 1 - i) * 14
+            const zIndex = 40 + (i + 1) * 10   /* 50/60/70 — always above row1's 10/20/30 */
+            return (
+              <div key={i} className="sticky pb-3" style={{ top: topPx, zIndex }}>
+                <MobileIndustryCard card={card} />
+              </div>
+            )
+          })}
+        </div>
+
+        {/* ── Row 2: sm–lg grid ── */}
+        <div ref={row2Ref} className="hidden sm:grid sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
           {ROW_TWO.map((card, i) => (
             <IndustryCard key={i} card={card} index={i} inView={row2InView} />
           ))}
@@ -260,6 +286,74 @@ function Services() {
 
       </div>
     </section>
+  )
+}
+
+/* ─── Mobile industry card (opacity-only entry — scroll IS the animation) ── */
+function MobileIndustryCard({ card }) {
+  const titleSegments = card.title.map((seg, i) => (
+    card.highlight?.includes(i)
+      ? <span key={i} className="text-brand-secondary">{seg}</span>
+      : <span key={i}>{seg}</span>
+  ))
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, amount: 0.05 }}
+      transition={{ duration: 0.35 }}
+      className="group relative flex min-h-[200px] flex-col justify-between overflow-hidden rounded-2xl p-6"
+      style={{
+        background: 'linear-gradient(145deg, #091a3a 0%, #060e1f 100%)',
+        border: '1px solid rgba(20,184,166,0.20)',
+      }}
+    >
+      {/* Illustration — bottom right (below scrim) */}
+      <div className="pointer-events-none absolute right-4 bottom-4 opacity-70">
+        {card.illustration}
+      </div>
+
+      {/* Dark scrim — subtle fade so illustration stays visible but text is readable */}
+      <div
+        className="pointer-events-none absolute inset-0 rounded-2xl"
+        style={{ background: 'linear-gradient(to top, rgba(6,14,31,0.82) 0%, rgba(6,14,31,0.45) 35%, rgba(6,14,31,0.12) 60%, transparent 100%)' }}
+      />
+
+      {/* Title */}
+      <h3 className="relative font-brand-primary text-2xl leading-tight text-white">
+        {titleSegments}
+      </h3>
+
+      {/* Content */}
+      <div className="relative">
+        {card.description && (
+          <p className="mb-4 font-brand-secondary text-sm leading-relaxed text-white/55">
+            {card.description}
+          </p>
+        )}
+        {card.tags && (
+          <div className="mb-4 flex flex-wrap gap-1.5">
+            {card.tags.map((t) => (
+              <span
+                key={t}
+                className="rounded-full border border-white/10 px-2.5 py-1 font-brand-secondary text-[11px] text-white/45"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+        )}
+        {card.cta && (
+          <button
+            onClick={() => document.querySelector('#cta')?.scrollIntoView({ behavior: 'smooth' })}
+            className="inline-flex items-center gap-2 rounded-lg border border-brand-secondary/25 bg-brand-secondary/10 px-4 py-2 font-brand-secondary text-xs font-semibold text-brand-secondary"
+          >
+            {card.cta}
+          </button>
+        )}
+      </div>
+    </motion.div>
   )
 }
 
@@ -293,6 +387,17 @@ function IndustryCard({ card, index, inView }) {
       {/* Hover teal glow */}
       <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         style={{ background: 'radial-gradient(ellipse at 80% 20%, rgba(20,184,166,0.08) 0%, transparent 65%)' }}
+      />
+
+      {/* Illustration — bottom right (below scrim) */}
+      <div className="pointer-events-none absolute right-4 bottom-4 opacity-70 transition-opacity duration-300 group-hover:opacity-95">
+        {card.illustration}
+      </div>
+
+      {/* Dark scrim — subtle fade so illustration stays visible but text is readable */}
+      <div
+        className="pointer-events-none absolute inset-0 rounded-2xl"
+        style={{ background: 'linear-gradient(to top, rgba(6,14,31,0.82) 0%, rgba(6,14,31,0.45) 35%, rgba(6,14,31,0.12) 60%, transparent 100%)' }}
       />
 
       {/* Title */}
@@ -333,10 +438,6 @@ function IndustryCard({ card, index, inView }) {
         )}
       </div>
 
-      {/* Illustration — bottom right */}
-      <div className="pointer-events-none absolute right-4 bottom-4 opacity-60 transition-opacity duration-300 group-hover:opacity-90">
-        {card.illustration}
-      </div>
     </motion.div>
   )
 }

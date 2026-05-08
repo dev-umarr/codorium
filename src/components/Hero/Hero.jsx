@@ -202,8 +202,8 @@ function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45 }}
             >
-              <span className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-1.5 font-brand-secondary text-sm font-semibold text-white/70">
-                <span className="h-1.5 w-1.5 rounded-full bg-brand-secondary" />
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1 font-brand-secondary text-xs font-semibold text-white/70 sm:gap-2 sm:px-4 sm:py-1.5 sm:text-sm">
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand-secondary" />
                 AI-Powered Development Agency
               </span>
             </motion.div>

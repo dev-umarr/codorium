@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import logoWhiteUrl from '../../assets/svgs/codorium-logo-full-white.svg'
 import logoDarkUrl from '../../assets/svgs/codorium-logo-full.svg'
@@ -53,8 +53,11 @@ const SOCIAL_LINKS = [
 
 /* ─── Main component ───────────────────────────────────────────── */
 function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [lightBg, setLightBg] = useState(false)
+  const [menuOpen, setMenuOpen]   = useState(false)
+  const [lightBg, setLightBg]     = useState(false)
+  const [visible, setVisible]     = useState(true)
+  const lastScrollY               = useRef(0)
+  const scrollTimer               = useRef(null)
 
   /* Swap logo when navbar floats over a light-background section */
   useEffect(() => {
@@ -67,11 +70,40 @@ function Navbar() {
         })
         setLightBg(intersecting.size > 0)
       },
-      /* Only the top ~10% of the viewport — where the navbar lives */
       { rootMargin: '0px 0px -88% 0px' }
     )
     document.querySelectorAll('[data-navbar-light]').forEach((el) => observer.observe(el))
     return () => observer.disconnect()
+  }, [])
+
+  /* Hide on scroll-down, reveal on scroll-up or when scrolling stops */
+  useEffect(() => {
+    function onScroll() {
+      const currentY = window.scrollY
+
+      if (currentY <= 60) {
+        /* Always visible near the top */
+        setVisible(true)
+      } else if (currentY > lastScrollY.current + 4) {
+        /* Scrolling down — hide */
+        setVisible(false)
+      } else if (currentY < lastScrollY.current - 4) {
+        /* Scrolling up — show */
+        setVisible(true)
+      }
+
+      lastScrollY.current = currentY
+
+      /* Also show when scrolling stops */
+      clearTimeout(scrollTimer.current)
+      scrollTimer.current = setTimeout(() => setVisible(true), 800)
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      clearTimeout(scrollTimer.current)
+    }
   }, [])
 
   useEffect(() => {
@@ -90,8 +122,12 @@ function Navbar() {
   return (
     <>
       {/* ── Top bar ────────────────────────────────────────────── */}
-      <header className="fixed top-0 z-50 w-full">
-        <div className="flex items-center justify-between px-8 py-5 lg:px-12">
+      <motion.header
+        className="fixed top-0 z-50 w-full"
+        animate={{ y: visible || menuOpen ? 0 : '-100%' }}
+        transition={{ duration: 0.3, ease: 'easeInOut' }}
+      >
+        <div className="flex items-center justify-between px-6 pb-4 pt-8 sm:px-8 sm:pb-5 sm:pt-10 lg:px-12 lg:pt-8 lg:pb-5">
           {/* Logo — swaps between white and dark depending on section bg */}
           <Link
             to="/"
@@ -101,7 +137,7 @@ function Navbar() {
             <img
               src={lightBg ? logoDarkUrl : logoWhiteUrl}
               alt="Codorium"
-              className="h-8 w-auto transition-opacity duration-300"
+              className="h-6 w-auto transition-opacity duration-300 sm:h-8"
             />
           </Link>
 
@@ -115,7 +151,7 @@ function Navbar() {
             <span className={`block h-px w-5 transition-all group-hover:w-7 ${lightBg ? 'bg-brand-primary/60 group-hover:bg-brand-primary' : 'bg-white/70 group-hover:bg-white'}`} />
           </button>
         </div>
-      </header>
+      </motion.header>
 
       {/* ── Fullscreen overlay ─────────────────────────────────── */}
       <AnimatePresence>

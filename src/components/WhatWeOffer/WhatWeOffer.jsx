@@ -101,7 +101,7 @@ function WhatWeOffer() {
             return (
               <div
                 key={offer.title}
-                className="sticky"
+                className="sticky pb-3"
                 style={{ top: topPx, zIndex }}
               >
                 <MobileStackCard offer={offer} index={i} />

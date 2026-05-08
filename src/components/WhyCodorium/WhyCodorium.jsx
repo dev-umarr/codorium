@@ -149,7 +149,7 @@ export default function WhyCodorium() {
             const topPx  = 80 + (CARDS.length - 1 - i) * 14
             const zIndex = (i + 1) * 10
             return (
-              <div key={card.id} className="sticky" style={{ top: topPx, zIndex }}>
+              <div key={card.id} className="sticky pb-3" style={{ top: topPx, zIndex }}>
                 <div
                   className="relative min-h-[220px] overflow-hidden"
                   style={{
