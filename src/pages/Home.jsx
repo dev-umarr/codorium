@@ -11,7 +11,7 @@ function Home() {
   return (
     <>
       <Seo
-        title="Your Digital Ally"
+        title="Where code becomes innovation"
         description="Codorium connects businesses with trusted service providers and delivers high-quality digital solutions in web, AI, and product engineering."
         path="/"
       />

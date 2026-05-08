@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import logoWhiteUrl from '../../assets/svgs/codorium-logo-full-white.svg'
-import umarCeoUrl from '../../assets/images/umar-ceo.jpeg'
+import umarCeoUrl from '../../assets/images/umar-ceo.png'
 
 /* ─── data ─────────────────────────────────────────────── */
 

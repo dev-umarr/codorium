@@ -35,7 +35,7 @@ function Seo({
   useEffect(() => {
     const normalizedPath = path.startsWith('/') ? path : `/${path}`
     const canonicalUrl = `${BASE_URL}${normalizedPath}`
-    const pageTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} | Your Digital Ally`
+    const pageTitle = title ? `${SITE_NAME} | ${title}` : `${SITE_NAME} | Where code becomes innovation`
     const pageDescription = description ?? 'Codorium connects businesses with trusted service providers and builds high-quality digital solutions across web, AI, and product engineering.'
 
     document.title = pageTitle
