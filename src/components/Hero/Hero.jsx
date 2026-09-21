@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
+import { openBookingModal } from '../../utils/calendly'
 
 const LOGO_TICKER = [
   'OpenAI', 'Next.js', 'React', 'Flutter', 'Node.js',
@@ -164,11 +165,6 @@ function NeuralCanvas() {
 }
 
 function Hero() {
-  function scrollTo(e, href) {
-    e.preventDefault()
-    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }
-
   return (
     <section className="relative min-h-screen overflow-hidden">
       {/* Neural network canvas */}
@@ -241,7 +237,10 @@ function Hero() {
               {/* Primary CTA */}
               <a
                 href="#cta"
-                onClick={(e) => scrollTo(e, '#cta')}
+                onClick={(e) => {
+                  e.preventDefault()
+                  openBookingModal()
+                }}
                 className="group inline-flex items-center gap-2.5 rounded-lg bg-brand-secondary px-7 py-3.5 font-brand-secondary text-base font-semibold text-white transition-all hover:bg-brand-secondary-hover hover:-translate-y-px hover:shadow-lg hover:shadow-brand-secondary/30 no-underline"
               >
                 Book a Call
@@ -479,3 +478,5 @@ function CodeLine({ color, text, indent = 0, children }) {
 }
 
 export default Hero
+
+export { NeuralCanvas }

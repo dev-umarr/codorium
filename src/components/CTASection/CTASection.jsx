@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { useInView } from '../../hooks/useInView'
+import { openBookingModal } from '../../utils/calendly'
 
 const TRUST_SIGNALS = [
   { icon: '⚡', text: 'Fast response — we reply within 24h' },
@@ -72,6 +73,10 @@ function CTASection() {
             >
               <a
                 href="mailto:hello@codorium.com"
+                onClick={(e) => {
+                  e.preventDefault()
+                  openBookingModal()
+                }}
                 className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand-secondary px-8 py-4 font-brand-secondary text-base font-semibold text-white shadow-lg shadow-brand-secondary/30 transition-all hover:bg-brand-secondary-hover hover:shadow-brand-secondary/50 hover:-translate-y-0.5 no-underline sm:w-auto"
               >
                 Book a Call

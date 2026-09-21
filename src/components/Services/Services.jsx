@@ -346,7 +346,7 @@ function MobileIndustryCard({ card }) {
         )}
         {card.cta && (
           <button
-            onClick={() => document.querySelector('#cta')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
             className="inline-flex items-center gap-2 rounded-lg border border-brand-secondary/25 bg-brand-secondary/10 px-4 py-2 font-brand-secondary text-xs font-semibold text-brand-secondary"
           >
             {card.cta}
@@ -430,7 +430,7 @@ function IndustryCard({ card, index, inView }) {
         {/* CTA for last card */}
         {card.cta && (
           <button
-            onClick={() => document.querySelector('#cta')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
             className="group/btn inline-flex items-center gap-2 rounded-lg border border-brand-secondary/25 bg-brand-secondary/10 px-4 py-2 font-brand-secondary text-xs font-semibold text-brand-secondary transition-all hover:bg-brand-secondary/15"
           >
             {card.cta}

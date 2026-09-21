@@ -1,0 +1,95 @@
+import { motion } from 'framer-motion'
+
+const CAPABILITIES = [
+  {
+    title: 'Custom vector search',
+    description: 'Purpose-built retrieval over your own documents, tickets, and data — tuned for precision, not generic similarity search.',
+    icon: <><path d="M12 3.5 18 6v5.5c0 4-2.5 7.1-6 9-3.5-1.9-6-5-6-9V6l6-2.5Z" /><path d="m9.5 12 1.7 1.7 3.5-3.5" /></>,
+  },
+  {
+    title: 'LLM integration',
+    description: 'Model-agnostic integrations across OpenAI, Anthropic, and open-weight models, with fallback and cost controls baked in.',
+    icon: <><circle cx="12" cy="12" r="7" /><path d="M12 8v4l2.5 2" /></>,
+  },
+  {
+    title: 'Secure data pipelines',
+    description: 'Ingestion, chunking, and embedding pipelines with access controls so sensitive data never leaks between users or tenants.',
+    icon: <><rect x="4" y="5" width="16" height="14" rx="2" /><path d="M4 9h16M8 7h.01M11 7h.01" /></>,
+  },
+  {
+    title: 'Real-time agents',
+    description: 'Multi-step agents that call your tools and APIs, with guardrails and human-in-the-loop checkpoints where it matters.',
+    icon: <><path d="m13 2-8 11h6l-1 9 8-12h-6l1-8Z" /></>,
+  },
+  {
+    title: 'Forecasting & ML',
+    description: 'Predictive models layered on top of your retrieval and application data to surface trends before they show up in a dashboard.',
+    icon: <><path d="m4 16 5-5 3 3 7-8" /><path d="M15 6h4v4" /></>,
+  },
+  {
+    title: 'Evaluation & monitoring',
+    description: 'Ongoing eval suites and drift monitoring so quality is measured, not assumed, after launch.',
+    icon: <><rect x="4" y="5" width="16" height="14" rx="2" /><path d="m8 12 2.5 2.5L16 9" /></>,
+  },
+]
+
+function CapabilityIcon({ children }) {
+  return (
+    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {children}
+    </svg>
+  )
+}
+
+function KeyCapabilities() {
+  return (
+    <section id="included" className="bg-brand-surface px-6 py-16 sm:px-8 sm:py-20 lg:py-24" aria-labelledby="key-capabilities-heading">
+      <div className="mx-auto max-w-7xl">
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.45 }}
+          className="max-w-2xl"
+        >
+          <span className="inline-flex items-center rounded-full border border-brand-secondary/70 px-4 py-1.5 font-brand-secondary text-[10px] font-semibold uppercase tracking-[0.14em] text-brand-secondary sm:text-xs">
+            What we deliver
+          </span>
+          <h2 id="key-capabilities-heading" className="mt-3 font-brand-primary text-3xl font-700 leading-tight text-brand-primary sm:text-5xl">
+            Key <span className="text-brand-secondary">capabilities</span>
+          </h2>
+          <p className="mt-4 max-w-xl font-brand-secondary text-sm font-normal leading-relaxed text-brand-primary/60 sm:text-base">
+            Every engagement is built on the same four pillars — the parts that make the difference between a demo and a system your team relies on daily.
+          </p>
+        </motion.div>
+
+        <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {CAPABILITIES.map((capability, index) => (
+            <motion.article
+              key={capability.title}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.45, delay: (index % 3) * 0.07, ease: 'easeOut' }}
+              whileHover={{ y: -4, borderColor: 'rgba(20,184,166,0.72)' }}
+              className="group flex min-h-[223px] flex-col rounded-xl border border-brand-secondary/25 p-6 shadow-[0_12px_28px_rgba(10,36,99,0.12)] transition-shadow duration-300 hover:shadow-[0_18px_36px_rgba(20,184,166,0.2)]"
+              style={{ background: 'linear-gradient(145deg, #10243b 0%, #0b1b31 55%, #091a2d 100%)' }}
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-brand-secondary/20 bg-brand-secondary/10 text-brand-secondary shadow-[0_0_16px_rgba(20,184,166,0.12)]">
+                <CapabilityIcon>{capability.icon}</CapabilityIcon>
+              </div>
+              <h3 className="mt-5 font-brand-primary text-base font-700 leading-tight text-white sm:text-lg">
+                {capability.title}
+              </h3>
+              <p className="mt-3 font-brand-secondary text-sm font-normal leading-relaxed text-white/60">
+                {capability.description}
+              </p>
+            </motion.article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default KeyCapabilities

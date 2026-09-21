@@ -1,15 +1,16 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import logoWhiteUrl from '../../assets/svgs/codorium-logo-full-white.svg'
 import logoDarkUrl from '../../assets/svgs/codorium-logo-full.svg'
+import { openBookingModal } from '../../utils/calendly'
 
 const MAIN_LINKS = [
-  { label: 'What We Offer', href: '#what-we-offer' },
+  { label: 'What We Offer', href: '/services' },
   { label: 'Who We Serve', href: '#services' },
-  { label: 'Why Codorium?', href: '#why-codorium' },
-  { label: 'Case Studies', href: '#case-studies' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Why Codorium?', href: '/about' },
+  { label: 'Case Studies', href: '/case-studies' },
+  { label: 'Contact', href: '/contact' },
 ]
 
 const SERVICE_LINKS = [
@@ -19,6 +20,7 @@ const SERVICE_LINKS = [
   'Web & Mobile Apps',
   'Automation Systems',
   'API Engineering',
+  'Dedicated Engineering',
 ]
 
 const SOCIAL_LINKS = [
@@ -53,6 +55,8 @@ const SOCIAL_LINKS = [
 
 /* ─── Main component ───────────────────────────────────────────── */
 function Navbar() {
+  const routeNavigate = useNavigate()
+  const { pathname } = useLocation()
   const [menuOpen, setMenuOpen]   = useState(false)
   const [lightBg, setLightBg]     = useState(false)
   const [visible, setVisible]     = useState(true)
@@ -61,20 +65,36 @@ function Navbar() {
 
   /* Swap logo when navbar floats over a light-background section */
   useEffect(() => {
+    let observer
+    let frameId
     const intersecting = new Set()
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) intersecting.add(entry.target)
-          else intersecting.delete(entry.target)
-        })
-        setLightBg(intersecting.size > 0)
-      },
-      { rootMargin: '0px 0px -88% 0px' }
-    )
-    document.querySelectorAll('[data-navbar-light]').forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
+
+    frameId = window.requestAnimationFrame(() => {
+      setLightBg(false)
+      const lightSections = document.querySelectorAll(
+        '[data-navbar-light], [data-theme="light"], section.bg-brand-surface, section.bg-white'
+      )
+
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) intersecting.add(entry.target)
+            else intersecting.delete(entry.target)
+          })
+          setLightBg(intersecting.size > 0)
+        },
+        { rootMargin: '0px 0px -88% 0px' }
+      )
+
+      lightSections.forEach((section) => observer.observe(section))
+    })
+
+    return () => {
+      window.cancelAnimationFrame(frameId)
+      observer?.disconnect()
+      intersecting.clear()
+    }
+  }, [pathname])
 
   /* Hide on scroll-down, reveal on scroll-up or when scrolling stops */
   useEffect(() => {
@@ -113,6 +133,10 @@ function Navbar() {
 
   function navigate(href) {
     setMenuOpen(false)
+    if (href.startsWith('/')) {
+      setTimeout(() => routeNavigate(href), 350)
+      return
+    }
     setTimeout(
       () => document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
       350
@@ -123,7 +147,7 @@ function Navbar() {
     <>
       {/* ── Top bar ────────────────────────────────────────────── */}
       <motion.header
-        className="fixed top-0 z-50 w-full"
+        className="fixed top-0 left-0 right-0 z-50 w-full"
         animate={{ y: visible || menuOpen ? 0 : '-100%' }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
       >
@@ -231,7 +255,7 @@ function FullscreenMenu({ onClose, onNavigate }) {
           className="flex flex-wrap items-center gap-4 sm:gap-6"
         >
           <button
-            onClick={() => onNavigate('#contact')}
+            onClick={openBookingModal}
             className="inline-flex items-center gap-2 rounded-lg bg-brand-secondary px-6 py-3 font-brand-secondary text-sm font-semibold text-white transition-all hover:bg-brand-secondary-hover"
           >
             Book a Call
@@ -302,7 +326,23 @@ function FullscreenMenu({ onClose, onNavigate }) {
                   transition={{ duration: 0.3, delay: 0.25 + i * 0.06 }}
                 >
                   <button
-                    onClick={() => onNavigate('#services')}
+                    onClick={() => onNavigate(
+                      s === 'AI & RAG Applications'
+                        ? '/services/ai-rag-applications'
+                        : s === 'SaaS Development'
+                          ? '/services/saas-development'
+                          : s === 'MVP Development'
+                            ? '/services/mvp-development'
+                          : s === 'Web & Mobile Apps'
+                            ? '/services/web-mobile-development'
+                          : s === 'Automation Systems'
+                            ? '/services/automation-systems'
+                          : s === 'API Engineering'
+                            ? '/services/api-engineering'
+                          : s === 'Dedicated Engineering'
+                            ? '/services/dedicated-engineering'
+                          : '/services'
+                    )}
                     className="group flex items-center gap-2.5 text-left font-brand-secondary text-sm text-white/55 transition-colors hover:text-white"
                   >
                     <span className="h-px w-4 bg-brand-secondary/50 transition-all group-hover:w-6 group-hover:bg-brand-secondary" />

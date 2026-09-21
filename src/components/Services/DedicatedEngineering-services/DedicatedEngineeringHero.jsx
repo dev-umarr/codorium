@@ -1,0 +1,40 @@
+import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
+import { NeuralCanvas } from '../../Hero/Hero'
+import { openBookingModal } from '../../../utils/calendly'
+
+const METRICS = [
+  { value: '1 week', label: 'to start adding capacity' },
+  { value: '100%', label: 'aligned with your roadmap' },
+  { value: '0%', label: 'agency overhead' },
+]
+
+function ArrowIcon() {
+  return <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none" aria-hidden="true"><path d="M3 8h10m0 0L9 4m4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+}
+
+function DedicatedEngineeringHero() {
+  return (
+    <section className="relative isolate flex min-h-[calc(100vh-1px)] items-center overflow-hidden bg-[#060e1f]" aria-labelledby="dedicated-engineering-hero-heading">
+      <NeuralCanvas />
+      <div className="pointer-events-none absolute -top-20 right-0 h-[600px] w-[600px] opacity-18" style={{ background: 'radial-gradient(circle at 70% 30%, #14b8a6 0%, transparent 60%)' }} />
+      <div className="pointer-events-none absolute bottom-0 -left-20 h-[400px] w-[400px] opacity-20" style={{ background: 'radial-gradient(circle, #0a2463 0%, transparent 70%)' }} />
+      <div className="pointer-events-none absolute inset-0 opacity-70" style={{ backgroundImage: 'radial-gradient(circle at 12% 24%, rgba(20, 184, 166, 0.18) 0 1px, transparent 1.5px), radial-gradient(circle at 78% 18%, rgba(255, 255, 255, 0.32) 0 1px, transparent 1.5px), radial-gradient(circle at 64% 76%, rgba(20, 184, 166, 0.2) 0 1px, transparent 1.5px)', backgroundSize: '220px 220px, 310px 310px, 270px 270px' }} />
+      <div className="pointer-events-none absolute -top-40 left-1/2 h-[560px] w-[560px] -translate-x-1/2 rounded-full opacity-25 blur-3xl" style={{ background: 'radial-gradient(circle, #14b8a6 0%, transparent 68%)' }} />
+      <div className="pointer-events-none absolute inset-0 opacity-40" style={{ background: 'linear-gradient(160deg, transparent 0%, rgba(9, 26, 58, 0.8) 48%, rgba(7, 46, 40, 0.65) 100%)' }} />
+
+      <div className="relative mx-auto w-full max-w-5xl px-6 py-32 text-center sm:px-8 lg:py-40">
+        <div className="mx-auto max-w-3xl">
+          <motion.span initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="mx-auto inline-flex items-center rounded-full border border-brand-secondary/70 px-4 py-1.5 font-brand-secondary text-[10px] font-semibold uppercase tracking-[0.14em] text-brand-secondary sm:text-xs">DEDICATED ENGINEERING</motion.span>
+          <motion.h1 id="dedicated-engineering-hero-heading" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.08 }} className="mt-7 max-w-3xl font-brand-primary text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl"><span className="text-brand-secondary sm:whitespace-nowrap">Engineers Who</span><br /><span className="sm:whitespace-nowrap">Fit Right In</span></motion.h1>
+          <motion.p initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.16 }} className="mx-auto mt-8 max-w-2xl font-brand-secondary text-base font-normal leading-relaxed text-white/60 sm:text-lg">Add experienced engineers who work like in-house team members, aligned to your sprints, culture, and roadmap. No agency overhead, no ramp-up risk.</motion.p>
+          <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.24 }} className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4"><Link to="/contact" onClick={(event) => { event.preventDefault(); openBookingModal() }} className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand-secondary px-7 py-3.5 font-brand-secondary text-base font-semibold text-[#06241f] shadow-lg shadow-brand-secondary/25 transition-all hover:-translate-y-px hover:bg-brand-secondary-hover sm:w-auto">Build your team<span className="transition-transform group-hover:translate-x-1"><ArrowIcon /></span></Link><a href="#dedicated-engineering-capabilities" className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-white/30 px-7 py-3.5 font-brand-secondary text-base font-semibold text-white transition-colors hover:border-brand-secondary hover:bg-brand-secondary/10 hover:text-brand-secondary sm:w-auto">See what&apos;s included<ArrowIcon /></a></motion.div>
+        </div>
+        <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.32 }} className="mx-auto mt-16 max-w-3xl border-t border-white/10 pt-9 text-left sm:mt-20 sm:pt-10" aria-label="Dedicated engineering metrics"><div className="grid grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-6">{METRICS.map((metric) => <div key={metric.label}><p className="font-brand-primary text-3xl font-700 leading-none text-white sm:text-4xl">{metric.value}</p><p className="mt-2 font-brand-secondary text-sm font-normal leading-tight text-white/55">{metric.label}</p></div>)}</div></motion.div>
+      </div>
+      <div className="pointer-events-none absolute bottom-0 left-0 mb-[-1px] w-full overflow-hidden leading-none" style={{ lineHeight: 0 }} aria-hidden="true"><svg viewBox="0 0 1440 72" fill="none" xmlns="http://www.w3.org/2000/svg" className="block h-[72px] w-full" preserveAspectRatio="none"><path d="M0 72H1440V36C1200 0 960 72 720 36C480 0 240 72 0 36V72Z" fill="#ffffff" /></svg></div>
+    </section>
+  )
+}
+
+export default DedicatedEngineeringHero

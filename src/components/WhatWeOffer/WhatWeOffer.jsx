@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { useInView } from '../../hooks/useInView'
 
 const OFFERINGS = [
@@ -7,24 +8,28 @@ const OFFERINGS = [
     description:
       'We design and ship production-ready AI systems — RAG pipelines, LLM-powered assistants, intelligent agents, and vector search. Built to integrate with your existing data and workflows.',
     category: 'AI Development',
+    href: '/services/ai-rag-applications',
   },
   {
     title: 'Full Product Build',
     description:
       'We take your product from idea to live — handling design, architecture, frontend, backend, and DevOps. You get a working product, not just a codebase.',
     category: 'Product Build',
+    href: '/services/saas-development',
   },
   {
     title: 'MVP to Market',
     description:
       'Built for founders who need to move fast. We ship a lean, investor-ready MVP in 6–8 weeks, using the right tech choices to avoid rewrites later.',
     category: 'MVP Launch',
+    href: '/services/mvp-development',
   },
   {
     title: 'Dedicated Engineering',
     description:
       'Add experienced engineers who work like in-house team members — aligned to your sprints, culture, and roadmap. No agency overhead, no ramp-up risk.',
     category: 'Engineering',
+    href: '/services/dedicated-engineering',
   },
 ]
 
@@ -156,7 +161,11 @@ function MobileStackCard({ offer, index }) {
     >
       {/* White circle arrow — top right */}
       <div className="mb-5 flex justify-end">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+        <Link
+          to={offer.href}
+          aria-label={`View ${offer.title} service`}
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-white transition-transform duration-200 hover:-translate-y-0.5 hover:translate-x-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1628]"
+        >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path
               d="M2 12L12 2M12 2H4M12 2V10"
@@ -166,7 +175,7 @@ function MobileStackCard({ offer, index }) {
               strokeLinejoin="round"
             />
           </svg>
-        </div>
+        </Link>
       </div>
 
       {/* Step number badge */}
@@ -185,9 +194,9 @@ function MobileStackCard({ offer, index }) {
       </p>
 
       {/* Category link */}
-      <button
-        onClick={() => document.querySelector('#cta')?.scrollIntoView({ behavior: 'smooth' })}
-        className="group/link flex min-h-[44px] items-center gap-2 border-t border-white/8 pt-4"
+      <Link
+        to={offer.href}
+        className="group/link flex min-h-[44px] items-center gap-2 border-t border-white/8 pt-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1628]"
       >
         <span className="font-brand-secondary text-[11px] font-semibold uppercase tracking-[0.14em] text-white/35 transition-colors group-hover/link:text-brand-secondary">
           {offer.category}
@@ -202,7 +211,7 @@ function MobileStackCard({ offer, index }) {
             strokeLinecap="round" strokeLinejoin="round"
           />
         </svg>
-      </button>
+      </Link>
     </motion.div>
   )
 }
@@ -229,7 +238,11 @@ function OfferingCard({ offer, index, inView }) {
     >
       {/* White circle arrow — top right */}
       <div className="mb-6 flex justify-end sm:mb-8">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+        <Link
+          to={offer.href}
+          aria-label={`View ${offer.title} service`}
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-white transition-transform duration-200 hover:-translate-y-0.5 hover:translate-x-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1628]"
+        >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path
               d="M2 12L12 2M12 2H4M12 2V10"
@@ -239,7 +252,7 @@ function OfferingCard({ offer, index, inView }) {
               strokeLinejoin="round"
             />
           </svg>
-        </div>
+        </Link>
       </div>
 
       {/* Title */}
@@ -253,9 +266,9 @@ function OfferingCard({ offer, index, inView }) {
       </p>
 
       {/* Category link — bottom */}
-      <button
-        onClick={() => document.querySelector('#cta')?.scrollIntoView({ behavior: 'smooth' })}
-        className="group/link flex min-h-[44px] items-center gap-2 border-t border-white/8 pt-4"
+      <Link
+        to={offer.href}
+        className="group/link flex min-h-[44px] items-center gap-2 border-t border-white/8 pt-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1628]"
       >
         <span className="font-brand-secondary text-[11px] font-semibold uppercase tracking-[0.14em] text-white/35 transition-colors group-hover/link:text-brand-secondary">
           {offer.category}
@@ -270,7 +283,7 @@ function OfferingCard({ offer, index, inView }) {
             strokeLinecap="round" strokeLinejoin="round"
           />
         </svg>
-      </button>
+      </Link>
     </motion.div>
   )
 }

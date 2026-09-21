@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { openBookingModal } from '../../utils/calendly'
 import logoWhiteUrl from '../../assets/svgs/codorium-logo-full-white.svg'
 import umarCeoUrl from '../../assets/images/umar-ceo.png'
 
@@ -22,19 +23,22 @@ const SCOPES = [
 
 const FOOTER_LINKS = {
   Services: [
-    { label: 'AI & RAG Applications', href: '#services' },
-    { label: 'SaaS Development', href: '#services' },
-    { label: 'MVP Development', href: '#services' },
-    { label: 'Web & Mobile Apps', href: '#services' },
-    { label: 'Automation Systems', href: '#services' },
+    { label: 'AI & RAG Applications', href: '/services/ai-rag-applications' },
+    { label: 'SaaS Development', href: '/services/saas-development' },
+    { label: 'MVP Development', href: '/services/mvp-development' },
+    { label: 'Web & Mobile Apps', href: '/services/web-mobile-development' },
+    { label: 'Automation Systems', href: '/services/automation-systems' },
+    { label: 'API Engineering', href: '/services/api-engineering' },
+    { label: 'Dedicated Engineering', href: '/services/dedicated-engineering' },
   ],
   Company: [
-    { label: 'About Us', href: '#about' },
-    { label: 'Our Process', href: '#process' },
-    { label: 'Case Studies', href: '#case-studies' },
-    { label: 'Tech Stack', href: '#' },
+    { label: 'About Us', href: '/about' },
+    { label: 'Our Process', href: '/process' },
+    { label: 'Case Studies', href: '/case-studies' },
+    { label: 'Our Services', href: '/services' },
   ],
   Contact: [
+    { label: 'Contact Us', href: '/contact' },
     { label: 'hello@codorium.com', href: 'mailto:hello@codorium.com' },
     { label: 'Book a Call', href: '#cta' },
   ],
@@ -258,7 +262,11 @@ function Footer() {
   function handleNavClick(e, href) {
     if (href.startsWith('#')) {
       e.preventDefault()
-      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      if (href === '#cta') {
+        openBookingModal()
+      } else {
+        document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
     }
   }
 
@@ -475,13 +483,23 @@ function Footer() {
               <ul className="flex flex-col gap-2.5">
                 {links.map((link) => (
                   <li key={link.label}>
-                    <a
-                      href={link.href}
-                      onClick={(e) => handleNavClick(e, link.href)}
-                      className="font-brand-secondary text-sm text-white/45 no-underline transition-colors hover:text-white/80"
-                    >
-                      {link.label}
-                    </a>
+                    {link.href.startsWith('/') ? (
+                      <Link
+                        to={link.href}
+                        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                        className="font-brand-secondary text-sm text-white/45 no-underline transition-colors hover:text-white/80"
+                      >
+                        {link.label}
+                      </Link>
+                    ) : (
+                      <a
+                        href={link.href}
+                        onClick={(e) => handleNavClick(e, link.href)}
+                        className="font-brand-secondary text-sm text-white/45 no-underline transition-colors hover:text-white/80"
+                      >
+                        {link.label}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>

@@ -1,0 +1,65 @@
+import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
+
+function ArrowIcon() {
+  return (
+    <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none" aria-hidden="true">
+      <path d="M3 8h10m0 0L9 4m4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+function ServiceCTASection() {
+  return (
+    <section id="cta" className="bg-brand-surface px-6 py-16 sm:px-8 sm:py-20 lg:py-24" aria-labelledby="service-cta-heading">
+      <div className="mx-auto max-w-5xl">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: 0.55, ease: 'easeOut' }}
+          className="group relative overflow-hidden rounded-2xl px-6 py-12 text-center sm:px-10 sm:py-14 lg:px-16 lg:py-16"
+          style={{
+            background: 'linear-gradient(135deg, #0a2463 0%, #091a3a 60%, #062d26 100%)',
+            border: '1px solid rgba(20,184,166,0.38)',
+            boxShadow: '0 0 22px rgba(20,184,166,0.16), 0 0 3px rgba(20,184,166,0.22), inset 0 0 30px rgba(20,184,166,0.05)',
+          }}
+          whileHover={{
+            borderColor: 'rgba(20,184,166,0.72)',
+            boxShadow: '0 0 36px rgba(20,184,166,0.32), 0 0 6px rgba(20,184,166,0.52), 0 8px 48px rgba(0,0,0,0.25), inset 0 0 44px rgba(20,184,166,0.08)',
+          }}
+          transition={{ duration: 0.25 }}
+        >
+          <div className="pointer-events-none absolute -right-24 -top-32 h-72 w-72 rounded-full bg-brand-secondary/15 blur-3xl" />
+          <div className="relative flex flex-col items-center gap-4">
+            <h2 id="service-cta-heading" className="font-brand-primary text-2xl font-700 leading-tight text-white sm:text-3xl lg:text-4xl">
+              Ready to build the future with AI?
+            </h2>
+            <p className="max-w-xl font-brand-secondary text-sm font-normal leading-relaxed text-white/60 sm:text-base">
+              Tell us what you&apos;re trying to automate. We&apos;ll reply within one business day with a clear plan, timeline, and cost.
+            </p>
+
+            <div className="mt-3 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row sm:gap-4">
+              <Link
+                to="/contact"
+                className="group/button inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#2DD4BF] px-6 py-3 font-brand-secondary text-sm font-semibold text-[#06241f] shadow-lg shadow-brand-secondary/30 transition-all hover:-translate-y-0.5 hover:bg-brand-secondary hover:shadow-brand-secondary/50 sm:w-auto"
+              >
+                Start your project
+                <span className="transition-transform group-hover/button:translate-x-1"><ArrowIcon /></span>
+              </Link>
+              <Link
+                to="/case-studies"
+                className="group/button inline-flex w-full items-center justify-center gap-2 rounded-lg border border-white/20 px-6 py-3 font-brand-secondary text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:border-brand-secondary/60 hover:bg-white/5 sm:w-auto"
+              >
+                See our work
+                <span className="transition-transform group-hover/button:translate-x-1"><ArrowIcon /></span>
+              </Link>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+export default ServiceCTASection

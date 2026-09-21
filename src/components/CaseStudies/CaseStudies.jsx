@@ -1,77 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from '../../hooks/useInView'
-import lexaiVisual from '../../assets/images/image.png'
-import servlyVisual from '../../assets/images/image-3.png'
-import Analytix from '../../assets/images/image-2.jpg'
-
-/* ─── Data ──────────────────────────────────────────────── */
-
-const STUDIES = [
-  {
-    id: 'fundraiseup',
-    category: 'DONATION TECHNOLOGY',
-    title: 'Fundraise Up — Online Donation Platform',
-    description:
-      'Fundraise Up helps nonprofits grow online giving with a conversion-focused donation experience, modern payment options, and personalized donor journeys.',
-    quote: { text: 'Codorium turned our donation flow into a modern, high-converting experience. Their team moved fast, communicated clearly, and delivered with quality.', author: 'Emily R.', role: 'Growth Lead, Fundraise Up' },
-    metrics: [
-      { value: '2017', label: 'Year founded' },
-      { value: '3,000+', label: 'Nonprofits using Fundraise Up' },
-      { value: '300+', label: 'Team members worldwide' },
-      { value: 'NYC', label: 'Headquarters in Brooklyn, New York' },
-    ],
-    bg: 'linear-gradient(145deg, #071e1a 0%, #060e1f 55%, #091a3a 100%)',
-    visual: (
-      <div className="relative h-full w-full">
-        <img src={servlyVisual} alt="Fundraise Up project mockup" className="h-full w-full object-cover" />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #14b8a6 0%, #0f766e 100%)', opacity: 0.30, mixBlendMode: 'color' }} />
-      </div>
-    ),
-  },
-  {
-    id: 'analytix',
-    category: 'E-COMMERCE SUBSCRIPTION',
-    title: 'FashionPass — Clothing Rental Platform',
-    description:
-      'Built and optimized a subscription commerce experience for FashionPass, helping shoppers discover, rent, and rotate premium fashion with a fast and intuitive journey.',
-    quote: { text: 'Codorium helped us improve the full member journey, from discovery to checkout. The experience feels faster, cleaner, and much easier to scale.', author: 'Marketing Team', role: 'FashionPass' },
-    metrics: [
-      { value: '100K+', label: 'Happy members highlighted' },
-      { value: '600+', label: 'Google reviews showcased' },
-      { value: '5.0', label: 'Google review rating shown' },
-      { value: '2026', label: 'Latest site copyright year' },
-    ],
-    bg: 'linear-gradient(145deg, #060e1f 0%, #091a3a 55%, #071e1a 100%)',
-    visual: (
-      <div className="relative h-full w-full">
-        <img src={Analytix} alt="FashionPass project mockup" className="h-full w-full object-cover" />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #14b8a6 0%, #0f766e 100%)', opacity: 0.30, mixBlendMode: 'color' }} />
-      </div>
-    ),
-  },
-  {
-    id: 'enpor',
-    category: 'FINTECH & BLOCKCHAIN',
-    title: 'ENPOR — Borderless Finance Platform',
-    description:
-      'Designed and delivered a fintech web experience for ENPOR, combining crypto and traditional banking messaging with clear ICO flows, product sections, and conversion-focused account actions.',
-    quote: { text: 'Codorium gave structure to a complex fintech vision and turned it into a clear, launch-ready platform our team could confidently present to investors and users.', author: 'Paul S.', role: 'CEO, ENPOR' },
-    metrics: [
-      { value: '250M', label: 'EPR token supply highlighted' },
-      { value: '4', label: 'Card tiers presented' },
-      { value: '8 wks', label: 'ICO timeline shown' },
-      { value: '15%', label: 'Early-week bonus structure' },
-    ],
-    bg: 'linear-gradient(145deg, #051a14 0%, #071e2e 50%, #060e1f 100%)',
-    visual: (
-      <div className="relative h-full w-full">
-        <img src={lexaiVisual} alt="ENPOR project mockup" className="h-full w-full object-cover" />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #14b8a6 0%, #0f766e 100%)', opacity: 0.30, mixBlendMode: 'color' }} />
-      </div>
-    ),
-  },
-]
+import { FEATURED_CASE_STUDIES as STUDIES } from '../../data/caseStudies'
 
 /* ─── Arrow button ───────────────────────────────────────── */
 
@@ -93,7 +23,7 @@ function NavArrow({ dir, onClick, disabled }) {
 
 /* ─── Component ─────────────────────────────────────────── */
 
-export default function CaseStudies() {
+export default function CaseStudies({ standardPageSpacing = false }) {
   const [idx, setIdx] = useState(0)
   const [dir, setDir] = useState(1)   // 1 = forward, -1 = backward
   const [headerRef, headerInView] = useInView()
@@ -111,7 +41,11 @@ export default function CaseStudies() {
   }
 
   return (
-    <section id="case-studies" data-navbar-light className="bg-brand-surface pt-10 pb-10 lg:pt-14 lg:pb-14">
+    <section
+      id="case-studies"
+      data-navbar-light
+      className={standardPageSpacing ? 'bg-brand-surface pb-20 pt-0 sm:pb-24 lg:pb-32 lg:pt-0' : 'bg-brand-surface pt-10 pb-10 lg:pt-14 lg:pb-14'}
+    >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
 
         {/* Heading */}
@@ -158,7 +92,7 @@ export default function CaseStudies() {
             {/* Project visual */}
             <AnimatePresence mode="wait" custom={dir}>
               <motion.div
-                key={study.id + '-visual'}
+                key={study.slug + '-visual'}
                 custom={dir}
                 variants={variants}
                 initial="enter"
@@ -168,14 +102,14 @@ export default function CaseStudies() {
                 className="relative overflow-hidden rounded-2xl"
                 style={{ background: study.bg, aspectRatio: '16/9' }}
               >
-                {study.visual}
+                <img src={study.image} alt={study.imageAlt} className="h-full w-full object-cover" />
               </motion.div>
             </AnimatePresence>
 
             {/* Info row */}
             <AnimatePresence mode="wait" custom={dir}>
               <motion.div
-                key={study.id + '-info'}
+                key={study.slug + '-info'}
                 custom={dir}
                 variants={variants}
                 initial="enter"
@@ -208,12 +142,12 @@ export default function CaseStudies() {
 
                 {/* Description */}
                 <p className="font-brand-secondary text-sm leading-relaxed text-brand-primary/50">
-                  {study.description}
+                  {study.shortDescription}
                 </p>
 
                 {/* CTA */}
                 <motion.a
-                  href="#cta"
+                  href={study.path}
                   className="inline-flex w-fit items-center gap-2 rounded-full border border-brand-primary/15 px-6 py-2.5 font-brand-secondary text-sm text-brand-primary/60 no-underline transition-all hover:border-brand-secondary hover:text-brand-secondary"
                   whileHover={{ scale: 1.03 }}
                 >
@@ -230,7 +164,7 @@ export default function CaseStudies() {
           <div className="flex flex-col gap-6">
             <AnimatePresence mode="wait" custom={dir}>
               <motion.div
-                key={study.id + '-metrics'}
+                key={study.slug + '-metrics'}
                 custom={dir}
                 variants={variants}
                 initial="enter"
@@ -258,7 +192,7 @@ export default function CaseStudies() {
             {/* Testimonial */}
             <AnimatePresence mode="wait" custom={dir}>
               <motion.div
-                key={study.id + '-quote'}
+                key={study.slug + '-quote'}
                 custom={dir}
                 variants={variants}
                 initial="enter"
