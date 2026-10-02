@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { useInView } from '../../hooks/useInView'
 import { FEATURED_CASE_STUDIES as STUDIES } from '../../data/caseStudies'
 
@@ -41,10 +42,14 @@ export default function CaseStudies({ standardPageSpacing = false }) {
   }
 
   return (
-    <section
+    <motion.section
       id="case-studies"
       data-navbar-light
       className={standardPageSpacing ? 'bg-brand-surface pb-20 pt-0 sm:pb-24 lg:pb-32 lg:pt-0' : 'bg-brand-surface pt-10 pb-10 lg:pt-14 lg:pb-14'}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
 
@@ -76,6 +81,17 @@ export default function CaseStudies({ standardPageSpacing = false }) {
               Real products. Real outcomes. A sample of what we've shipped for founders and businesses.
             </motion.p>
           </div>
+          <nav className="mt-6 flex flex-wrap gap-2" aria-label="Case studies">
+            {STUDIES.map((item) => (
+              <Link
+                key={item.slug}
+                to={item.path}
+                className="rounded-full border border-brand-border px-3 py-1.5 font-brand-secondary text-[10px] font-600 uppercase tracking-wider text-brand-primary/55 no-underline transition-colors hover:border-brand-secondary hover:text-brand-secondary"
+              >
+                {item.title.split(' - ')[0]}
+              </Link>
+            ))}
+          </nav>
           {/* <motion.div
             className="mt-4 h-px bg-brand-border"
             initial={{ scaleX: 0, originX: 0 }}
@@ -146,16 +162,17 @@ export default function CaseStudies({ standardPageSpacing = false }) {
                 </p>
 
                 {/* CTA */}
-                <motion.a
-                  href={study.path}
+                <motion.div
                   className="inline-flex w-fit items-center gap-2 rounded-full border border-brand-primary/15 px-6 py-2.5 font-brand-secondary text-sm text-brand-primary/60 no-underline transition-all hover:border-brand-secondary hover:text-brand-secondary"
                   whileHover={{ scale: 1.03 }}
                 >
-                  View Case Study
-                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                    <path d="M2.5 11.5L11.5 2.5M11.5 2.5H5.5M11.5 2.5V8.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </motion.a>
+                  <Link to={study.path} className="inline-flex items-center gap-2 no-underline">
+                    View Case Study
+                    <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                      <path d="M2.5 11.5L11.5 2.5M11.5 2.5H5.5M11.5 2.5V8.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </Link>
+                </motion.div>
               </motion.div>
             </AnimatePresence>
           </div>
@@ -249,6 +266,6 @@ export default function CaseStudies({ standardPageSpacing = false }) {
 
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }

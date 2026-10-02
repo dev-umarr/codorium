@@ -56,7 +56,14 @@ function WhatWeOffer() {
      * position:sticky works on mobile cards. The decorative glow is wrapped in
      * its own overflow-hidden div so it still clips cleanly.
      */
-    <section id="what-we-offer" className="relative">
+    <motion.section
+      id="what-we-offer"
+      className="relative"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
       {/* Glow — kept in its own overflow-hidden so it doesn't bleed horizontally */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
         <div
@@ -141,7 +148,7 @@ function WhatWeOffer() {
           />
         </svg>
       </div>
-    </section>
+    </motion.section>
   )
 }
 

@@ -2,6 +2,7 @@ import fundraiseUpVisual from '../assets/images/image-3.png'
 import fashionPassVisual from '../assets/images/image-2.jpg'
 import enporVisual from '../assets/images/image.png'
 
+
 const detailDefaults = {
     bg: 'linear-gradient(145deg, #071e1a 0%, #060e1f 55%, #091a3a 100%)',
     overview: 'Codorium partnered with the team to turn a complex product idea into a clear, dependable digital experience.',
@@ -65,8 +66,9 @@ export const CASE_STUDIES = [
     createCaseStudy({ slug: 'harbor-logistics', category: 'Enterprise Automation', title: 'Harbor Logistics - Dispatch Automation Suite', shortDescription: 'Automated route assignment and live tracking for a busy dispatch operation.', image: enporVisual, imageAlt: 'Harbor Logistics dispatch project visual', bullets: ['Automated dispatch engine', 'Live GPS driver tracking', 'Dispatcher override controls'], metrics: [{ value: '50%', label: 'Faster dispatch' }, { value: '22%', label: 'Lower fuel cost' }] }),
 ]
 
-export const FEATURED_CASE_STUDIES = CASE_STUDIES.slice(0, 3)
+export const FEATURED_CASE_STUDIES = CASE_STUDIES.slice(0, 4)
 
 export function getCaseStudy(slug) {
     return CASE_STUDIES.find((study) => study.slug === slug)
 }
+

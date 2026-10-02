@@ -15,9 +15,9 @@ function CapabilityIcon({ children }) {
 
 function SaasCapabilities() {
   return (
-    <section id="saas-capabilities" className="bg-brand-surface px-6 py-16 sm:px-8 sm:py-20 lg:py-24" aria-labelledby="saas-capabilities-heading">
+    <motion.section id="saas-capabilities" className="bg-brand-surface px-6 py-16 sm:px-8 sm:py-20 lg:py-24" aria-labelledby="saas-capabilities-heading" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15 }} transition={{ duration: 0.6, ease: 'easeOut' }}>
       <div className="mx-auto max-w-7xl">
-        <motion.div initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.45 }} className="max-w-2xl">
+        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.35 }} transition={{ duration: 0.5 }} className="max-w-2xl">
           <span className="inline-flex items-center rounded-full border border-brand-secondary/70 px-4 py-1.5 font-brand-secondary text-[10px] font-semibold uppercase tracking-[0.14em] text-brand-secondary sm:text-xs">What we deliver</span>
           <h2 id="saas-capabilities-heading" className="mt-3 font-brand-primary text-3xl font-700 leading-tight text-brand-primary sm:text-5xl">
             Key SaaS <span className="text-brand-secondary">capabilities</span>
@@ -29,7 +29,7 @@ function SaasCapabilities() {
 
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {CAPABILITIES.map((capability, index) => (
-            <motion.article key={capability.title} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.45, delay: (index % 3) * 0.07 }} whileHover={{ y: -4, borderColor: 'rgba(20,184,166,0.72)' }} className="group flex min-h-[235px] flex-col rounded-xl border border-brand-secondary/25 p-6 shadow-[0_12px_28px_rgba(10,36,99,0.12)] transition-shadow duration-300 hover:shadow-[0_18px_36px_rgba(20,184,166,0.2)]" style={{ background: 'linear-gradient(145deg, #10243b 0%, #0b1b31 55%, #091a2d 100%)' }}>
+            <motion.article key={capability.title} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: (index % 3) * 0.1, ease: 'easeOut' }} whileHover={{ y: -4, borderColor: 'rgba(20,184,166,0.72)', transition: { duration: 0.25, ease: 'easeOut' } }} className="group flex min-h-[235px] flex-col rounded-xl border border-brand-secondary/25 p-6 shadow-[0_12px_28px_rgba(10,36,99,0.12)] transition-shadow duration-300 hover:shadow-[0_18px_36px_rgba(20,184,166,0.2)]" style={{ background: 'linear-gradient(145deg, #10243b 0%, #0b1b31 55%, #091a2d 100%)' }}>
               <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-brand-secondary/20 bg-brand-secondary/10 text-brand-secondary shadow-[0_0_16px_rgba(20,184,166,0.12)]"><CapabilityIcon>{capability.icon}</CapabilityIcon></div>
               <h3 className="mt-5 font-brand-primary text-base font-700 leading-tight text-white sm:text-lg">{capability.title}</h3>
               <p className="mt-3 font-brand-secondary text-sm font-normal leading-relaxed text-white/60">{capability.description}</p>
@@ -37,7 +37,7 @@ function SaasCapabilities() {
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 

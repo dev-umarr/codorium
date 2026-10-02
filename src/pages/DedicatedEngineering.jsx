@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import DedicatedEngineeringHero from '../components/Services/DedicatedEngineering-services/DedicatedEngineeringHero'
 import DedicatedEngineeringCapabilities from '../components/Services/DedicatedEngineering-services/DedicatedEngineeringCapabilities'
 import Foundation from '../components/Foundation/Foundation'
@@ -10,7 +11,11 @@ import Seo from '../components/SEO/Seo'
 
 function DedicatedEngineering() {
   return (
-    <>
+    <motion.main
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
       <Seo
         title="Dedicated Engineering Teams"
         description="Experienced engineers who work like in-house team members, aligned to your sprints, culture, and roadmap."
@@ -24,7 +29,7 @@ function DedicatedEngineering() {
       <WhyChooseDedicatedEngineering />
       <Testimonials variant="dedicated" />
       <DedicatedEngineeringCTASection />
-    </>
+    </motion.main>
   )
 }
 

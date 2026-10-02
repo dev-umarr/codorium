@@ -11,9 +11,12 @@ const METRICS = [
 
 function AIRagHero() {
   return (
-    <section
+    <motion.section
       className="relative isolate flex min-h-[calc(100vh-1px)] items-center overflow-hidden bg-[#060e1f]"
       aria-labelledby="ai-rag-hero-heading"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <NeuralCanvas />
 
@@ -55,10 +58,10 @@ function AIRagHero() {
 
           <motion.h1
             id="ai-rag-hero-heading"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.08 }}
-            className="mt-7 max-w-3xl font-brand-primary text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl"
+            transition={{ duration: 0.55, delay: 0.1 }}
+            className="mt-7 max-w-3xl font-brand-primary text-4xl font-normal leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl"
           >
             <span className="text-brand-secondary sm:whitespace-nowrap">AI &amp; RAG Applications</span>
             <br />
@@ -66,18 +69,18 @@ function AIRagHero() {
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 18 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.16 }}
+            transition={{ duration: 0.55, delay: 0.2 }}
             className="mx-auto mt-8 max-w-2xl font-brand-secondary text-base font-normal leading-relaxed text-white/60 sm:text-lg"
           >
             Production-ready artificial intelligence systems designed to automate workflows and scale operations without increasing headcount or overhead.
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 18 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.24 }}
+            transition={{ duration: 0.55, delay: 0.3 }}
             className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4"
           >
             <Link
@@ -100,9 +103,9 @@ function AIRagHero() {
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.32 }}
+          transition={{ duration: 0.55, delay: 0.4 }}
           className="mx-auto mt-16 max-w-3xl border-t border-white/10 pt-9 text-left sm:mt-20 sm:pt-10"
           aria-label="AI and RAG application performance metrics"
         >
@@ -130,7 +133,7 @@ function AIRagHero() {
           <path d="M0 72H1440V36C1200 0 960 72 720 36C480 0 240 72 0 36V72Z" fill="#ffffff" />
         </svg>
       </div>
-    </section>
+    </motion.section>
   )
 }
 

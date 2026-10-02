@@ -7,9 +7,9 @@ import { NeuralCanvas } from '../components/Hero/Hero'
 import Seo from '../components/SEO/Seo'
 import { CASE_STUDIES } from '../data/caseStudies'
 
-const PORTFOLIO_FILTERS = ['All', 'AI Systems', 'Enterprise Automation', 'Frontend Engineering', 'MVP Development']
+const PORTFOLIO_FILTERS = ['All', 'Donation Technology', 'E-commerce Subscription', 'Fintech & Blockchain']
 
-const PORTFOLIO_STUDIES = CASE_STUDIES.slice(3)
+const PORTFOLIO_STUDIES = CASE_STUDIES.slice(0, 3)
 
 const IMPACT_METRICS = [
   { icon: '🏆', value: '250+', label: 'Projects Delivered' },
@@ -26,12 +26,20 @@ function PortfolioSection() {
     : PORTFOLIO_STUDIES.filter((study) => study.category === activeFilter)
 
   return (
-    <section id="portfolio" className="bg-brand-surface px-6 pb-20 pt-0 sm:px-8 sm:pb-24 lg:pb-32 lg:pt-0" aria-labelledby="portfolio-heading">
+    <motion.section
+      id="portfolio"
+      className="bg-brand-surface px-6 pb-20 pt-0 sm:px-8 sm:pb-24 lg:pb-32 lg:pt-0"
+      aria-labelledby="portfolio-heading"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
+          viewport={{ once: true, amount: 0.35 }}
           transition={{ duration: 0.5 }}
           className="mx-auto max-w-5xl text-center"
         >
@@ -47,7 +55,15 @@ function PortfolioSection() {
           </p>
         </motion.div>
 
-        <div className="mt-8 flex flex-wrap justify-center gap-2" role="group" aria-label="Filter case studies">
+        <motion.div
+          className="mt-8 flex flex-wrap justify-center gap-2"
+          role="group"
+          aria-label="Filter case studies"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
+        >
           {PORTFOLIO_FILTERS.map((filter) => {
             const isActive = activeFilter === filter
             return (
@@ -66,79 +82,96 @@ function PortfolioSection() {
               </button>
             )
           })}
-        </div>
+        </motion.div>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {visibleStudies.map((study, index) => (
-            <motion.article
-              key={study.title}
-              layout
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.45, delay: index * 0.06 }}
-              className={`flex min-h-[370px] flex-col rounded-xl border p-5 shadow-lg transition-transform duration-200 hover:-translate-y-1 sm:p-6 ${
-                study.highlight
-                  ? 'border-brand-secondary/40 shadow-[0_14px_32px_rgba(20,184,166,0.12)]'
-                  : 'border-[#17304d] shadow-brand-primary/15'
-              }`}
-              style={{
-                background: study.highlight
-                  ? 'linear-gradient(145deg, #0d4a3f 0%, #092c32 48%, #091a3a 100%)'
-                  : 'linear-gradient(145deg, #10243b 0%, #0b1b31 55%, #091a2d 100%)',
-              }}
-            >
-              <span className="w-fit rounded-full border border-brand-secondary/30 bg-brand-secondary/10 px-2.5 py-1 font-brand-secondary text-[9px] font-semibold uppercase tracking-[0.12em] text-brand-secondary">
-                {study.category}
-              </span>
-              <h3 className="mt-4 font-brand-primary text-lg font-700 leading-tight text-white">
-                {study.title}
-              </h3>
-              <p className="mt-3 font-brand-secondary text-xs leading-relaxed text-white/55">
-                {study.shortDescription}
-              </p>
-              <ul className="mt-4 space-y-1.5 font-brand-secondary text-[11px] leading-relaxed text-white/65">
-                {study.bullets.map((bullet) => (
-                  <li key={bullet} className="flex gap-2">
-                    <span className="text-brand-secondary" aria-hidden="true">✓</span>
-                    <span>{bullet}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-auto border-t border-white/10 pt-4">
-                <div className="grid grid-cols-2 gap-3">
-                  {study.metrics.map(({ value, label }) => (
-                    <div key={label}>
-                      <p className="font-brand-primary text-base font-700 leading-none text-white">{value}</p>
-                      <p className="mt-1 font-brand-secondary text-[8px] font-semibold uppercase leading-tight tracking-[0.08em] text-white/45">{label}</p>
-                    </div>
-                  ))}
+          {visibleStudies.map((study, index) => {
+            const bullets = Array.isArray(study.bullets) ? study.bullets : []
+            const metrics = Array.isArray(study.metrics) ? study.metrics : []
+
+            return (
+              <motion.article
+                key={study.title}
+                layout
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: (index % 3) * 0.1, ease: 'easeOut' }}
+                className={`flex min-h-[370px] flex-col rounded-xl border p-5 shadow-lg transition-transform duration-200 hover:-translate-y-1 sm:p-6 ${
+                  study.highlight
+                    ? 'border-brand-secondary/40 shadow-[0_14px_32px_rgba(20,184,166,0.12)]'
+                    : 'border-[#17304d] shadow-brand-primary/15'
+                }`}
+                style={{
+                  background: study.highlight
+                    ? 'linear-gradient(145deg, #0d4a3f 0%, #092c32 48%, #091a3a 100%)'
+                    : 'linear-gradient(145deg, #10243b 0%, #0b1b31 55%, #091a2d 100%)',
+                }}
+              >
+                <span className="w-fit rounded-full border border-brand-secondary/30 bg-brand-secondary/10 px-2.5 py-1 font-brand-secondary text-[9px] font-semibold uppercase tracking-[0.12em] text-brand-secondary">
+                  {study.category}
+                </span>
+                <h3 className="mt-4 font-brand-primary text-lg font-700 leading-tight text-white">
+                  {study.title}
+                </h3>
+                <p className="mt-3 font-brand-secondary text-xs leading-relaxed text-white/55">
+                  {study.shortDescription}
+                </p>
+                {bullets.length > 0 && (
+                  <ul className="mt-4 space-y-1.5 font-brand-secondary text-[11px] leading-relaxed text-white/65">
+                    {bullets.map((bullet) => (
+                      <li key={bullet} className="flex gap-2">
+                        <span className="text-brand-secondary" aria-hidden="true">✓</span>
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <div className="mt-auto border-t border-white/10 pt-4">
+                  <div className="grid grid-cols-2 gap-3">
+                    {metrics.length > 0 ? (
+                      metrics.map(({ value, label }) => (
+                        <div key={label}>
+                          <p className="font-brand-primary text-base font-700 leading-none text-white">{value}</p>
+                          <p className="mt-1 font-brand-secondary text-[8px] font-semibold uppercase leading-tight tracking-[0.08em] text-white/45">{label}</p>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="col-span-2 text-left">
+                        <p className="font-brand-secondary text-[10px] font-semibold uppercase tracking-[0.12em] text-brand-secondary">Project</p>
+                      </div>
+                    )}
+                  </div>
+                  <Link to={study.path} className="mt-4 inline-flex items-center gap-1 font-brand-secondary text-[10px] font-semibold text-brand-secondary transition-colors hover:text-brand-secondary-hover">
+                    Read Case Study
+                    <span aria-hidden="true">→</span>
+                  </Link>
                 </div>
-                <Link to={study.path} className="mt-4 inline-flex items-center gap-1 font-brand-secondary text-[10px] font-semibold text-brand-secondary transition-colors hover:text-brand-secondary-hover">
-                  Read Case Study
-                  <span aria-hidden="true">→</span>
-                </Link>
-              </div>
-            </motion.article>
-          ))}
+              </motion.article>
+            )
+          })}
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 
 function ImpactMetricsSection() {
   return (
-    <section
+    <motion.section
       id="impact-metrics"
       className="bg-brand-surface px-6 pb-20 pt-0 sm:px-8 sm:pb-24 lg:pb-32 lg:pt-0"
       aria-labelledby="impact-metrics-heading"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
+          viewport={{ once: true, amount: 0.35 }}
           transition={{ duration: 0.5 }}
           className="mx-auto max-w-3xl text-center"
         >
@@ -158,10 +191,10 @@ function ImpactMetricsSection() {
           {IMPACT_METRICS.map((metric, index) => (
             <motion.article
               key={metric.label}
-              initial={{ opacity: 0, y: 18 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.45, delay: index * 0.07 }}
+              transition={{ duration: 0.5, delay: (index % 5) * 0.1, ease: 'easeOut' }}
               className="flex min-h-[224px] min-w-0 flex-col items-center justify-center rounded-2xl border border-[#17304d] bg-[#10243b] px-4 py-8 text-center shadow-lg shadow-brand-primary/10 transition-all duration-300 hover:-translate-y-1 hover:border-brand-secondary/40 hover:shadow-[0_16px_34px_rgba(20,184,166,0.14)]"
               style={{ background: 'linear-gradient(145deg, #0d4a3f 0%, #092c32 48%, #091a3a 100%)' }}
             >
@@ -174,23 +207,27 @@ function ImpactMetricsSection() {
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 
 function FeaturedCaseStudy() {
   return (
-    <section
+    <motion.section
       id="featured-case-study"
       className="bg-brand-surface px-6 pb-20 pt-10 sm:px-8 sm:pb-24 sm:pt-14 lg:pb-32 lg:pt-20"
       aria-labelledby="featured-case-study-heading"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <div className="mx-auto max-w-5xl">
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.45 }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.5 }}
           className="mb-5 flex justify-center"
         >
           <span className="inline-flex items-center gap-2 rounded-full border border-brand-secondary/40 bg-brand-secondary/5 px-3 py-1 font-brand-secondary text-[10px] font-semibold uppercase tracking-[0.16em] text-brand-secondary sm:px-4 sm:py-1.5 sm:text-xs">
@@ -200,16 +237,20 @@ function FeaturedCaseStudy() {
         </motion.div>
 
         <motion.article
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.55, delay: 0.08 }}
+          transition={{ duration: 0.6, delay: 0.08, ease: 'easeOut' }}
           className="relative overflow-hidden rounded-2xl border border-brand-border bg-white shadow-[0_18px_55px_rgba(0,0,0,0.24),0_0_28px_rgba(20,184,166,0.08)]"
         >
           <div className="grid lg:grid-cols-[1.08fr_0.92fr]">
-            <div
+            <motion.div
               className="relative min-h-[280px] overflow-hidden bg-[#081b2e] sm:min-h-[360px] lg:min-h-[420px]"
               style={{ background: 'linear-gradient(145deg, #0b1d32 0%, #091a2d 52%, #071827 100%)' }}
+              initial={{ opacity: 0, scale: 0.97 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
             >
               <img
                 src={CASE_STUDIES[0].image}
@@ -221,9 +262,15 @@ function FeaturedCaseStudy() {
                 <span className="h-1.5 w-1.5 rounded-full bg-brand-secondary shadow-[0_0_8px_rgba(20,184,166,0.9)]" />
                 6 Weeks - Concept to Launch
               </span>
-            </div>
+            </motion.div>
 
-            <div className="flex flex-col justify-center border-t border-brand-border bg-white px-6 py-8 sm:px-9 sm:py-10 lg:border-l lg:border-t-0 lg:px-8 lg:py-10">
+            <motion.div
+              className="flex flex-col justify-center border-t border-brand-border bg-white px-6 py-8 sm:px-9 sm:py-10 lg:border-l lg:border-t-0 lg:px-8 lg:py-10"
+              initial={{ opacity: 0, x: 24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, delay: 0.08, ease: 'easeOut' }}
+            >
               <span className="w-fit rounded-full border border-brand-secondary/30 bg-brand-secondary/5 px-2.5 py-1 font-brand-secondary text-[9px] font-semibold uppercase tracking-[0.16em] text-brand-secondary">
                 FINTECH
               </span>
@@ -253,26 +300,33 @@ function FeaturedCaseStudy() {
                 View Full Case Study
                 <span aria-hidden="true">→</span>
               </Link>
-            </div>
+            </motion.div>
           </div>
         </motion.article>
       </div>
-    </section>
+    </motion.section>
   )
 }
 
 function CaseStudies() {
   return (
-    <>
+    <motion.main
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
       <Seo
         title="Case Studies"
         description="See how Codorium has helped startups, SaaS teams, and enterprises turn AI ambition into shipped systems with measurable outcomes."
         path="/case-studies"
       />
 
-      <section
+      <motion.section
         className="relative isolate flex min-h-[calc(100vh-1px)] items-center overflow-hidden bg-[#060e1f]"
         aria-labelledby="case-studies-title"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
       >
         <NeuralCanvas />
 
@@ -365,7 +419,7 @@ function CaseStudies() {
             <path d="M0 72H1440V36C1200 0 960 72 720 36C480 0 240 72 0 36V72Z" fill="#ffffff" />
           </svg>
         </div>
-      </section>
+      </motion.section>
 
       <FeaturedCaseStudy />
       <PortfolioSection />
@@ -381,7 +435,7 @@ function CaseStudies() {
         primaryFirst
         flushTop
       />
-    </>
+    </motion.main>
   )
 }
 

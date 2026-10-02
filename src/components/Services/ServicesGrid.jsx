@@ -71,11 +71,11 @@ function ServiceIcon({ type }) {
 function ServiceCard({ service, index }) {
   return (
     <motion.article
-      initial={{ opacity: 0, y: 18 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.45, delay: index * 0.07, ease: 'easeOut' }}
-      whileHover={{ y: -5, borderColor: 'rgba(20,184,166,0.72)' }}
+      transition={{ duration: 0.5, delay: (index % 3) * 0.1, ease: 'easeOut' }}
+      whileHover={{ y: -5, borderColor: 'rgba(20,184,166,0.72)', transition: { duration: 0.25, ease: 'easeOut' } }}
       className="group flex min-h-[310px] flex-col rounded-xl border border-brand-secondary/25 p-5 shadow-[0_12px_28px_rgba(10,36,99,0.12)] transition-shadow duration-300 hover:shadow-[0_18px_36px_rgba(20,184,166,0.2)] sm:p-6"
       style={{
         background: 'linear-gradient(145deg, #10243b 0%, #0b1b31 55%, #091a2d 100%)',
@@ -114,13 +114,21 @@ function ServiceCard({ service, index }) {
 
 function ServicesGrid() {
   return (
-    <section id="core-capabilities" className="bg-brand-surface px-6 pb-20 pt-10 sm:px-8 sm:pb-24 sm:pt-14 lg:pb-32 lg:pt-20" aria-labelledby="core-capabilities-heading">
+    <motion.section
+      id="core-capabilities"
+      className="bg-brand-surface px-6 pb-20 pt-10 sm:px-8 sm:pb-24 sm:pt-14 lg:pb-32 lg:pt-20"
+      aria-labelledby="core-capabilities-heading"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
       <div className="mx-auto max-w-7xl">
         <motion.div
-          initial={{ opacity: 0, y: 14 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.45 }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.5 }}
           className="mx-auto max-w-2xl text-center"
         >
           <span className="inline-flex rounded-full border border-brand-secondary/70 px-4 py-1.5 font-brand-secondary text-xs font-semibold uppercase tracking-[0.16em] text-brand-secondary">
@@ -140,7 +148,7 @@ function ServicesGrid() {
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 

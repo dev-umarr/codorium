@@ -31,10 +31,14 @@ const TECHNOLOGIES = [
 
 function DedicatedEngineeringTechStack() {
   return (
-    <section
+    <motion.section
       id="dedicated-engineering-tech-stack"
       aria-labelledby="dedicated-engineering-tech-stack-heading"
       className="relative isolate overflow-hidden bg-[#060e1f] py-16 text-white lg:py-20"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <NeuralCanvas />
 
@@ -75,10 +79,10 @@ function DedicatedEngineeringTechStack() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 pb-20 pt-10 lg:px-8 lg:pb-24 lg:pt-12">
         <motion.div
-          initial={{ opacity: 0, y: 14 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.45 }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.5 }}
           className="mb-10 max-w-3xl"
         >
           <div className="mb-5 flex items-center gap-3">
@@ -99,10 +103,10 @@ function DedicatedEngineeringTechStack() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
+          initial={{ opacity: 0, scale: 0.97 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
           className="relative overflow-hidden rounded-[2rem] border border-white/15 bg-slate-950/65 p-6 shadow-[0_28px_90px_rgba(0,0,0,0.38)] backdrop-blur-xl sm:p-8"
         >
           <div className="pointer-events-none absolute -right-10 -top-10 h-44 w-44 rounded-full bg-emerald-400/10 blur-3xl" aria-hidden="true" />
@@ -130,8 +134,8 @@ function DedicatedEngineeringTechStack() {
               <motion.span
                 key={technology}
                 variants={{
-                  hidden: { opacity: 0, y: 8 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+                  hidden: { opacity: 0, y: 12 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
                 }}
                 whileHover={{ y: -2, borderColor: 'rgba(20,184,166,0.6)', boxShadow: '0 0 0 1px rgba(20,184,166,0.2)' }}
                 className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/3 px-4 py-2.5 font-brand-secondary text-sm font-semibold text-white/80 shadow-[0_8px_24px_rgba(10,36,99,0.08)] transition-all duration-200"
@@ -149,7 +153,7 @@ function DedicatedEngineeringTechStack() {
           <path d="M0 72H1440V36C1200 0 960 72 720 36C480 0 240 72 0 36V72Z" fill="#ffffff" />
         </svg>
       </div>
-    </section>
+    </motion.section>
   )
 }
 

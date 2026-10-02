@@ -11,13 +11,18 @@ function ArrowIcon() {
 
 function ServiceCTASection() {
   return (
-    <section id="cta" className="bg-brand-surface px-6 py-16 sm:px-8 sm:py-20 lg:py-24" aria-labelledby="service-cta-heading">
+  <motion.section id="cta" className="bg-brand-surface px-6 py-16 sm:px-8 sm:py-20 lg:py-24" aria-labelledby="service-cta-heading" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15 }} transition={{ duration: 0.6, ease: 'easeOut' }}>
       <div className="mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.25 }}
-          transition={{ duration: 0.55, ease: 'easeOut' }}
+          transition={{
+            duration: 0.55,
+            ease: 'easeOut',
+            borderColor: { duration: 0.25 },
+            boxShadow: { duration: 0.25 },
+          }}
           className="group relative overflow-hidden rounded-2xl px-6 py-12 text-center sm:px-10 sm:py-14 lg:px-16 lg:py-16"
           style={{
             background: 'linear-gradient(135deg, #0a2463 0%, #091a3a 60%, #062d26 100%)',
@@ -28,7 +33,6 @@ function ServiceCTASection() {
             borderColor: 'rgba(20,184,166,0.72)',
             boxShadow: '0 0 36px rgba(20,184,166,0.32), 0 0 6px rgba(20,184,166,0.52), 0 8px 48px rgba(0,0,0,0.25), inset 0 0 44px rgba(20,184,166,0.08)',
           }}
-          transition={{ duration: 0.25 }}
         >
           <div className="pointer-events-none absolute -right-24 -top-32 h-72 w-72 rounded-full bg-brand-secondary/15 blur-3xl" />
           <div className="relative flex flex-col items-center gap-4">
@@ -58,7 +62,7 @@ function ServiceCTASection() {
           </div>
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 

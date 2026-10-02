@@ -29,12 +29,20 @@ function AboutCTA({
   const [ctaRef, ctaInView] = useInView()
 
   return (
-    <section id="about-cta" data-navbar-light className={`bg-brand-surface pb-24 lg:pb-32 ${flushTop ? 'pt-0 lg:pt-0' : 'pt-24 lg:pt-32'}`}>
+    <motion.section
+      id="about-cta"
+      data-navbar-light
+      className={`bg-brand-surface pb-24 lg:pb-32 ${flushTop ? 'pt-0 lg:pt-0' : 'pt-24 lg:pt-32'}`}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           ref={ctaRef}
           initial={{ opacity: 0, y: 32 }}
-          animate={ctaInView ? { opacity: 1, y: 0 } : {}}
+          animate={ctaInView ? { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } } : {}}
           className="group relative mb-4 overflow-hidden rounded-2xl px-6 py-14 text-center sm:px-10 sm:py-16 lg:px-16 lg:py-20"
           style={{
             background: 'linear-gradient(135deg, #0a2463 0%, #091a3a 60%, #062d26 100%)',
@@ -86,7 +94,7 @@ function AboutCTA({
           </div>
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import umarCeoUrl from '../../assets/images/umar-ceo.png'
+import testimonialsProfileUrl from '../../assets/images/Testimonials-Profile.jpg'
 
 const TESTIMONIALS = [
   {
@@ -76,7 +76,7 @@ function TestimonialCard({ testimonial, variant = 'default' }) {
         isDedicated ? 'border-brand-border' : 'border-brand-border',
       ].join(' ')}>
         <img
-          src={umarCeoUrl}
+          src={testimonialsProfileUrl}
           alt=""
           className="h-10 w-10 rounded-full object-cover object-top"
         />
@@ -107,7 +107,7 @@ function Testimonials({ variant = 'default' }) {
   }
 
   return (
-    <section
+    <motion.section
       id="testimonials"
       data-navbar-light
       className={[
@@ -115,9 +115,19 @@ function Testimonials({ variant = 'default' }) {
         isDedicated ? 'bg-brand-surface' : 'bg-brand-surface',
       ].join(' ')}
       aria-labelledby="testimonials-heading"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <div className="mx-auto max-w-7xl">
-        <div className="text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.5 }}
+          className="text-center"
+        >
           <span className="inline-flex rounded-full border border-brand-secondary/70 px-4 py-1.5 font-brand-secondary text-xs font-semibold uppercase tracking-[0.14em] text-brand-secondary">
             Testimonials
           </span>
@@ -127,14 +137,14 @@ function Testimonials({ variant = 'default' }) {
           <p className="mx-auto mt-4 max-w-2xl font-brand-secondary text-base font-normal leading-relaxed text-brand-primary/60">
             Hear directly from the businesses that trust Codorium to turn their ideas into successful digital solutions.
           </p>
-        </div>
+        </motion.div>
 
         <div className="mt-12 grid gap-10 lg:grid-cols-[0.7fr_1.3fr] lg:items-center lg:gap-14">
           <motion.div
-            initial={{ opacity: 0, x: -18 }}
+            initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
           >
             <div className="font-brand-primary text-[7rem] font-700 leading-[0.55] text-brand-secondary" aria-hidden="true">“</div>
             <h3 className="mt-12 max-w-xs font-brand-primary text-4xl font-700 leading-tight text-brand-primary sm:text-5xl">
@@ -145,7 +155,13 @@ function Testimonials({ variant = 'default' }) {
             </p>
           </motion.div>
 
-          <div className="min-w-0">
+          <motion.div
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.08, ease: 'easeOut' }}
+            className="min-w-0"
+          >
             <div className="overflow-hidden px-1 pb-5 pt-1">
               <motion.div
                 className="flex gap-5"
@@ -190,10 +206,10 @@ function Testimonials({ variant = 'default' }) {
                 </button>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 

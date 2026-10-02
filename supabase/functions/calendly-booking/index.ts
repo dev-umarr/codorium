@@ -60,54 +60,75 @@ function getRetryDelayMs(retryAfter: string | null, attempt: number) {
     return 1000 * (attempt + 1)
 }
 
-async function calendlyRequest(path: string, accessToken: string, init: RequestInit = {}) {
-    const maxRetries = 2
+async function calendlyRequest(
+    path: string,
+    accessToken: string,
+    init: RequestInit = {}
+) {
+    const response = await fetch(`https://api.calendly.com${path}`, {
+        ...init,
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+            ...(init.headers || {}),
+        },
+    })
 
-    for (let attempt = 0; attempt <= maxRetries; attempt += 1) {
-        let response: Response
-        try {
-            response = await fetch(`https://api.calendly.com${path}`, {
-                ...init,
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json',
-                    ...(init.headers || {}),
-                },
-            })
-        } catch (error) {
-            console.error('Calendly API network failure', {
-                path,
-                message: error instanceof Error ? error.message : error,
-            })
-            throw new Error('Unable to reach Calendly. Please try again shortly.')
-        }
+    const body = await response.json().catch(() => ({}))
 
-        const body = await response.json().catch(() => ({}))
-        if (response.status === 429) {
-            if (attempt < maxRetries) {
-                const delayMs = getRetryDelayMs(response.headers.get('Retry-After'), attempt)
-                console.warn('Calendly API rate limited; retrying request', { path, attempt: attempt + 1, delayMs })
-                await sleep(delayMs)
-                continue
-            }
+    // Handle Calendly rate limiting explicitly
+    if (response.status === 429) {
+        const rateLimit =
+            response.headers.get('X-RateLimit-Limit')
 
-            console.error('Calendly API rate limit persisted after retries', { path, response: body })
-            throw new Error('Too many booking attempts. Please wait a minute and try again.')
-        }
+        const remaining =
+            response.headers.get('X-RateLimit-Remaining')
 
-        if (!response.ok) {
-            console.error('Calendly API request failed', {
-                path,
-                status: response.status,
-                response: body,
-            })
-            const detail = body?.message || body?.title || body?.detail
-            throw new Error(detail ? `Calendly rejected the request: ${detail}` : `Calendly rejected the request (${response.status}).`)
-        }
-        return body
+        const reset =
+            response.headers.get('X-RateLimit-Reset')
+
+        const retryAfter =
+            response.headers.get('Retry-After')
+
+        console.error('CALENDLY RATE LIMIT HIT', {
+            path,
+            status: response.status,
+            rateLimit,
+            remaining,
+            reset,
+            retryAfter,
+            response: body,
+        })
+
+        throw new Error(
+            `Calendly rate limit reached. ` +
+            `Limit=${rateLimit ?? 'unknown'}, ` +
+            `Remaining=${remaining ?? 'unknown'}, ` +
+            `Reset=${reset ?? 'unknown'}s`
+        )
     }
 
-    throw new Error('Too many booking attempts. Please wait a minute and try again.')
+    // Handle all other Calendly errors
+    if (!response.ok) {
+        console.error('Calendly API request failed', {
+            path,
+            status: response.status,
+            response: body,
+        })
+
+        const detail =
+            body?.message ||
+            body?.title ||
+            body?.detail
+
+        throw new Error(
+            detail
+                ? `Calendly rejected the request: ${detail}`
+                : `Calendly rejected the request (${response.status}).`
+        )
+    }
+
+    return body
 }
 
 async function getAvailability(request: BookingRequest, accessToken: string, eventTypeUri: string) {

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 
 const FAQ_ITEMS = [
   {
@@ -31,21 +32,31 @@ function FAQSection() {
   }
 
   return (
-    <section
+    <motion.section
       id="services-faq"
       data-navbar-light
       className="bg-brand-surface px-6 pb-20 pt-0 sm:px-8 sm:pb-24 lg:pb-32 lg:pt-0"
       aria-labelledby="services-faq-heading"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <div className="mx-auto max-w-5xl">
-        <div className="text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.5 }}
+          className="text-center"
+        >
           <span className="inline-flex rounded-full border border-brand-secondary/70 px-4 py-1.5 font-brand-secondary text-xs font-semibold uppercase tracking-[0.14em] text-brand-secondary">
             FAQ
           </span>
           <h2 id="services-faq-heading" className="mt-5 font-brand-primary text-4xl font-700 leading-tight text-brand-primary sm:text-5xl">
             Frequently Asked <span className="text-brand-secondary">Questions</span>
           </h2>
-        </div>
+        </motion.div>
 
         <div className="mt-10 flex flex-col gap-3">
           {FAQ_ITEMS.map((item, index) => {
@@ -53,7 +64,14 @@ function FAQSection() {
             const answerId = `services-faq-answer-${index}`
 
             return (
-              <div key={item.question} className="overflow-hidden rounded-2xl border border-brand-border bg-white shadow-lg shadow-brand-primary/5">
+              <motion.div
+                key={item.question}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: index * 0.06, ease: 'easeOut' }}
+                className="overflow-hidden rounded-2xl border border-brand-border bg-white shadow-lg shadow-brand-primary/5"
+              >
                 <button
                   type="button"
                   aria-expanded={isOpen}
@@ -76,12 +94,12 @@ function FAQSection() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             )
           })}
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 

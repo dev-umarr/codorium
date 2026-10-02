@@ -37,18 +37,22 @@ const DARK_GRADIENT = 'linear-gradient(175deg, #071e1a 0%, #060e1f 50%, #091a3a 
 
 function ServicesWhyChooseUs() {
   return (
-    <section
+    <motion.section
       id="services-core-values"
       data-navbar-light
       className="bg-brand-surface px-6 pb-20 pt-0 sm:px-8 sm:pb-24 lg:pb-32 lg:pt-0"
       aria-labelledby="services-core-values-heading"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
-          transition={{ duration: 0.45 }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.5 }}
           className="mx-auto max-w-2xl text-center"
         >
           <span className="inline-flex rounded-full border border-brand-secondary/70 px-4 py-1.5 font-brand-secondary text-xs font-semibold uppercase tracking-[0.14em] text-brand-secondary">
@@ -69,11 +73,11 @@ function ServicesWhyChooseUs() {
             return (
               <motion.article
                 key={value.title}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{ duration: 0.45, delay: (index % 3) * 0.08 }}
-                whileHover={{ y: -4 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: (index % 3) * 0.1, ease: 'easeOut' }}
+                whileHover={{ y: -4, transition: { duration: 0.25, ease: 'easeOut' } }}
                 className={`min-h-[226px] rounded-2xl border p-6 shadow-lg transition-transform duration-200 ${
                   dark
                     ? 'border-white/8 text-white shadow-brand-primary/15'
@@ -97,7 +101,7 @@ function ServicesWhyChooseUs() {
           })}
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 

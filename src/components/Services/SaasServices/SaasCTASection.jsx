@@ -7,9 +7,9 @@ function ArrowIcon() {
 
 function SaasCTASection() {
   return (
-    <section id="saas-cta" className="bg-brand-surface px-6 py-16 sm:px-8 sm:py-20 lg:py-24" aria-labelledby="saas-cta-heading">
+  <motion.section id="saas-cta" className="bg-brand-surface px-6 py-16 sm:px-8 sm:py-20 lg:py-24" aria-labelledby="saas-cta-heading" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15 }} transition={{ duration: 0.6, ease: 'easeOut' }}>
       <div className="mx-auto max-w-5xl">
-        <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.55 }} className="group relative overflow-hidden rounded-2xl px-6 py-12 text-center sm:px-10 sm:py-14 lg:px-16 lg:py-16" style={{ background: 'linear-gradient(135deg, #0a2463 0%, #091a3a 60%, #062d26 100%)', border: '1px solid rgba(20,184,166,0.38)', boxShadow: '0 0 22px rgba(20,184,166,0.16), 0 0 3px rgba(20,184,166,0.22), inset 0 0 30px rgba(20,184,166,0.05)' }} whileHover={{ y: -2, borderColor: 'rgba(20,184,166,0.72)', boxShadow: '0 0 36px rgba(20,184,166,0.32), 0 0 6px rgba(20,184,166,0.52), 0 8px 48px rgba(0,0,0,0.25), inset 0 0 44px rgba(20,184,166,0.08)' }} transition={{ duration: 0.25 }}>
+        <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.55, ease: 'easeOut', borderColor: { duration: 0.25 }, boxShadow: { duration: 0.25 } }} className="group relative overflow-hidden rounded-2xl px-6 py-12 text-center sm:px-10 sm:py-14 lg:px-16 lg:py-16" style={{ background: 'linear-gradient(135deg, #0a2463 0%, #091a3a 60%, #062d26 100%)', border: '1px solid rgba(20,184,166,0.38)', boxShadow: '0 0 22px rgba(20,184,166,0.16), 0 0 3px rgba(20,184,166,0.22), inset 0 0 30px rgba(20,184,166,0.05)' }} whileHover={{ y: -2, borderColor: 'rgba(20,184,166,0.72)', boxShadow: '0 0 36px rgba(20,184,166,0.32), 0 0 6px rgba(20,184,166,0.52), 0 8px 48px rgba(0,0,0,0.25), inset 0 0 44px rgba(20,184,166,0.08)', transition: { duration: 0.25 } }}>
           <div className="pointer-events-none absolute -right-24 -top-32 h-72 w-72 rounded-full bg-brand-secondary/15 blur-3xl" />
           <div className="relative flex flex-col items-center gap-4">
             <h2 id="saas-cta-heading" className="font-brand-primary text-2xl font-700 leading-tight text-white sm:text-3xl lg:text-4xl">Ready to launch your SaaS product?</h2>
@@ -21,7 +21,7 @@ function SaasCTASection() {
           </div>
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 

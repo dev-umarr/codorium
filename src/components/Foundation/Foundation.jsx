@@ -37,11 +37,15 @@ const FOUNDATION_POINTS = [
 
 function Foundation() {
   return (
-    <section
+    <motion.section
       id="foundation"
       data-navbar-light
       className="overflow-hidden bg-brand-surface px-6 pb-20 pt-0 sm:px-8 sm:pb-24 lg:pb-32 lg:pt-0"
       aria-labelledby="foundation-heading"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <div className="mx-auto grid max-w-7xl items-center gap-10 px-6 sm:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-14 lg:px-8">
         <motion.div
@@ -66,10 +70,10 @@ function Foundation() {
             {FOUNDATION_POINTS.map((point, index) => (
               <motion.div
                 key={point.title}
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.35 }}
-                transition={{ duration: 0.45, delay: index * 0.08 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: index * 0.1, ease: 'easeOut' }}
                 className={`flex items-start gap-5 ${
                   index === 0
                     ? 'lg:ml-44'
@@ -98,7 +102,7 @@ function Foundation() {
           initial={{ opacity: 0, x: 24 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.65, delay: 0.08, ease: 'easeOut' }}
+          transition={{ duration: 0.6, delay: 0.08, ease: 'easeOut' }}
           className="flex justify-center bg-white lg:justify-end"
         >
           <img
@@ -109,7 +113,7 @@ function Foundation() {
           />
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 

@@ -9,11 +9,15 @@ const STATS = [
 
 function AboutUsSection() {
   return (
-    <section
+    <motion.section
       id="about-us"
       data-navbar-light
       className="overflow-hidden bg-brand-surface pb-20 pt-10 sm:pb-24 sm:pt-14 lg:pb-32 lg:pt-20"
       aria-labelledby="about-us-heading"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <div className="mx-auto grid max-w-7xl items-center gap-10 px-6 sm:px-8 lg:grid-cols-[1.02fr_0.98fr] lg:gap-14 lg:px-8">
         <motion.div
@@ -73,9 +77,13 @@ function AboutUsSection() {
           </div>
 
           <div className="mt-9 grid grid-cols-1 gap-3 sm:grid-cols-3">
-            {STATS.map((stat) => (
-              <div
+            {STATS.map((stat, index) => (
+              <motion.div
                 key={stat.label}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: (index % 3) * 0.1, ease: 'easeOut' }}
                 className="rounded-2xl px-4 py-4 text-center"
                 style={{
                   background: 'linear-gradient(135deg, #0a2463 0%, #091a3a 60%, #062d26 100%)',
@@ -87,12 +95,12 @@ function AboutUsSection() {
                   {stat.value}
                 </p>
                 <p className="mt-1 font-brand-secondary text-xs text-white/65 sm:text-sm">{stat.label}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 

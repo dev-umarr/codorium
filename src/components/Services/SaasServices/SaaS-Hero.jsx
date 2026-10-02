@@ -19,7 +19,7 @@ function ArrowIcon() {
 
 function SaaSHero() {
   return (
-    <section className="relative isolate flex min-h-[calc(100vh-1px)] items-center overflow-hidden bg-[#060e1f]" aria-labelledby="saas-hero-heading">
+    <motion.section className="relative isolate flex min-h-[calc(100vh-1px)] items-center overflow-hidden bg-[#060e1f]" aria-labelledby="saas-hero-heading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, ease: 'easeOut' }}>
       <NeuralCanvas />
 
       <div
@@ -60,10 +60,10 @@ function SaaSHero() {
 
           <motion.h1
             id="saas-hero-heading"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.08 }}
-            className="mt-7 max-w-3xl font-brand-primary text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl"
+            transition={{ duration: 0.55, delay: 0.1 }}
+            className="mt-7 max-w-3xl font-brand-primary text-4xl font-normal leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl"
           >
             <span className="text-brand-secondary sm:whitespace-nowrap">Scalable SaaS Products</span>
             <br />
@@ -71,18 +71,18 @@ function SaaSHero() {
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 18 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.16 }}
+            transition={{ duration: 0.55, delay: 0.2 }}
             className="mx-auto mt-8 max-w-2xl font-brand-secondary text-base font-normal leading-relaxed text-white/60 sm:text-lg"
           >
             Production-ready multi-tenant architectures, robust billing engines, and high-performance frontend applications built to scale from MVP to enterprise.
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 18 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.24 }}
+            transition={{ duration: 0.55, delay: 0.3 }}
             className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4"
           >
             <Link to="/contact" onClick={(event) => { event.preventDefault(); openBookingModal() }} className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand-secondary px-7 py-3.5 font-brand-secondary text-base font-semibold text-[#06241f] shadow-lg shadow-brand-secondary/25 transition-all hover:-translate-y-px hover:bg-brand-secondary-hover hover:shadow-brand-secondary/40 sm:w-auto">
@@ -97,9 +97,9 @@ function SaaSHero() {
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.32 }}
+          transition={{ duration: 0.55, delay: 0.4 }}
           className="mx-auto mt-16 max-w-3xl border-t border-white/10 pt-9 text-left sm:mt-20 sm:pt-10"
           aria-label="SaaS engineering metrics"
         >
@@ -123,7 +123,7 @@ function SaaSHero() {
           <path d="M0 72H1440V36C1200 0 960 72 720 36C480 0 240 72 0 36V72Z" fill="#ffffff" />
         </svg>
       </div>
-    </section>
+    </motion.section>
   )
 }
 

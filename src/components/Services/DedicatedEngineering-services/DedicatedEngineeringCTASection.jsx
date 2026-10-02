@@ -1,8 +1,64 @@
-import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 function DedicatedEngineeringCTASection() {
-  return <section id="dedicated-engineering-cta" className="bg-brand-surface px-6 py-16 sm:px-8 sm:py-20 lg:py-24" aria-labelledby="dedicated-engineering-cta-heading"><div className="mx-auto max-w-5xl"><motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.55 }} className="group relative overflow-hidden rounded-2xl px-6 py-12 text-center sm:px-10 sm:py-14 lg:px-16 lg:py-16" style={{ background: 'linear-gradient(135deg, #0a2463 0%, #091a3a 60%, #062d26 100%)', border: '1px solid rgba(20,184,166,0.38)', boxShadow: '0 0 22px rgba(20,184,166,0.16), 0 0 3px rgba(20,184,166,0.22), inset 0 0 30px rgba(20,184,166,0.05)' }} whileHover={{ y: -2, borderColor: 'rgba(20,184,166,0.72)' }}><div className="pointer-events-none absolute -right-24 -top-32 h-72 w-72 rounded-full bg-brand-secondary/15 blur-3xl" /><div className="relative flex flex-col items-center gap-4"><h2 id="dedicated-engineering-cta-heading" className="font-brand-primary text-2xl font-700 leading-tight text-white sm:text-3xl lg:text-4xl">Ready to add the right engineers?</h2><p className="max-w-xl font-brand-secondary text-sm font-normal leading-relaxed text-white/60 sm:text-base">Tell us where your team needs more momentum. We&apos;ll come back with a practical plan for the skills and capacity you need.</p><div className="mt-3 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row sm:gap-4"><Link to="/contact" className="inline-flex w-full items-center justify-center rounded-lg bg-[#2DD4BF] px-6 py-3 font-brand-secondary text-sm font-semibold text-[#06241f] shadow-lg shadow-brand-secondary/30 transition-all hover:-translate-y-0.5 hover:bg-brand-secondary sm:w-auto">Start a conversation</Link><Link to="/case-studies" className="inline-flex w-full items-center justify-center rounded-lg border border-white/20 px-6 py-3 font-brand-secondary text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:border-brand-secondary/60 hover:bg-white/5 sm:w-auto">See our work</Link></div></div></motion.div></div></section>
+  return (
+    <motion.section
+      id="dedicated-engineering-cta"
+      className="bg-brand-surface px-6 py-16 sm:px-8 sm:py-20 lg:py-24"
+      aria-labelledby="dedicated-engineering-cta-heading"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
+      <div className="mx-auto max-w-5xl">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: 0.55 }}
+          className="group relative overflow-hidden rounded-2xl px-6 py-12 text-center sm:px-10 sm:py-14 lg:px-16 lg:py-16"
+          style={{
+            background:
+              "linear-gradient(135deg, #0a2463 0%, #091a3a 60%, #062d26 100%)",
+            border: "1px solid rgba(20,184,166,0.38)",
+            boxShadow:
+              "0 0 22px rgba(20,184,166,0.16), 0 0 3px rgba(20,184,166,0.22), inset 0 0 30px rgba(20,184,166,0.05)",
+          }}
+          whileHover={{ y: -2, borderColor: "rgba(20,184,166,0.72)" }}
+        >
+          <div className="pointer-events-none absolute -right-24 -top-32 h-72 w-72 rounded-full bg-brand-secondary/15 blur-3xl" />
+          <div className="relative flex flex-col items-center gap-4">
+            <h2
+              id="dedicated-engineering-cta-heading"
+              className="font-brand-primary text-2xl font-700 leading-tight text-white sm:text-3xl lg:text-4xl"
+            >
+              Ready to add the right engineers?
+            </h2>
+            <p className="max-w-xl font-brand-secondary text-sm font-normal leading-relaxed text-white/60 sm:text-base">
+              Tell us where your team needs more momentum. We&apos;ll come back
+              with a practical plan for the skills and capacity you need.
+            </p>
+            <div className="mt-3 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row sm:gap-4">
+              <Link
+                to="/contact"
+                className="inline-flex w-full items-center justify-center rounded-lg bg-[#2DD4BF] px-6 py-3 font-brand-secondary text-sm font-semibold text-[#06241f] shadow-lg shadow-brand-secondary/30 transition-all hover:-translate-y-0.5 hover:bg-brand-secondary sm:w-auto"
+              >
+                Start a conversation
+              </Link>
+              <Link
+                to="/case-studies"
+                className="inline-flex w-full items-center justify-center rounded-lg border border-white/20 px-6 py-3 font-brand-secondary text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:border-brand-secondary/60 hover:bg-white/5 sm:w-auto"
+              >
+                See our work
+              </Link>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </motion.section>
+  );
 }
 
-export default DedicatedEngineeringCTASection
+export default DedicatedEngineeringCTASection;

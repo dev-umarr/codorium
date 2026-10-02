@@ -13,9 +13,12 @@ import { openBookingModal } from '../utils/calendly'
 
 function ServicesHero() {
   return (
-    <section
+    <motion.section
       className="relative isolate flex min-h-[calc(100vh-1px)] items-center overflow-hidden bg-[#060e1f]"
       aria-labelledby="services-title"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <NeuralCanvas />
 
@@ -105,7 +108,7 @@ function ServicesHero() {
           <path d="M0 72H1440V36C1200 0 960 72 720 36C480 0 240 72 0 36V72Z" fill="#ffffff" />
         </svg>
       </div>
-    </section>
+    </motion.section>
   )
 }
 

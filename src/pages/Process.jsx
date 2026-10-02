@@ -1,4 +1,3 @@
-import { Fragment } from 'react'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
@@ -142,35 +141,72 @@ function StageIcon({ type }) {
 }
 
 function ProcessStage({ stage, index }) {
+  const stageLabel = stage.number.padStart(2, '0')
+
   return (
     <motion.article
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ y: -6, boxShadow: '0 18px 34px rgba(20,184,166,0.2)' }}
-      className="group flex flex-col items-center text-center"
+      transition={{ duration: 0.6, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={{ y: -8, transition: { duration: 0.25, ease: 'easeOut' } }}
+      className="group relative isolate flex h-full flex-col overflow-hidden rounded-3xl border border-brand-secondary/20 p-7 shadow-[0_24px_48px_-20px_rgba(10,36,99,0.45)] transition-[border-color,box-shadow] duration-500 hover:border-brand-secondary/50 hover:shadow-[0_32px_60px_-20px_rgba(20,184,166,0.35)] sm:p-8"
+      style={{ background: 'linear-gradient(150deg, #0a2463 0%, #091a3a 55%, #062d26 100%)' }}
     >
-      <div
-        className="relative flex h-[120px] w-[180px] min-w-[180px] shrink-0 flex-col items-center rounded-[3rem] border border-brand-secondary/30 px-3 pt-5 shadow-[0_12px_28px_rgba(10,36,99,0.16)] transition-shadow"
-        style={{
-          background: 'linear-gradient(145deg, #0a2463 0%, #091a3a 60%, #062d26 100%)',
-          boxShadow: '0 0 22px rgba(20,184,166,0.12), 0 0 3px rgba(20,184,166,0.2), inset 0 0 30px rgba(20,184,166,0.05)',
-        }}
+      {/* Top highlight line */}
+      <span
+        className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-brand-secondary/70 to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-100"
+        aria-hidden="true"
+      />
+      {/* Hover glow */}
+      <span
+        className="pointer-events-none absolute -right-16 -top-16 -z-10 h-56 w-56 rounded-full opacity-30 blur-3xl transition-opacity duration-500 group-hover:opacity-70"
+        style={{ background: 'radial-gradient(circle, rgba(20,184,166,0.55) 0%, transparent 70%)' }}
+        aria-hidden="true"
+      />
+      {/* Subtle grid texture */}
+      <span
+        className="pointer-events-none absolute inset-0 -z-10 opacity-40 [background-image:linear-gradient(to_right,rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.035)_1px,transparent_1px)] [background-size:22px_22px] [mask-image:linear-gradient(to_bottom,black,transparent_75%)]"
+        aria-hidden="true"
+      />
+      {/* Watermark number */}
+      <span
+        className="pointer-events-none absolute -bottom-6 -right-2 -z-10 select-none font-brand-primary text-[8.5rem] font-700 leading-none text-white/[0.04] transition-colors duration-500 group-hover:text-brand-secondary/[0.08]"
+        aria-hidden="true"
       >
-        <span className="font-brand-primary text-3xl font-700 text-white">{stage.number}</span>
-        <span className="absolute bottom-[-32px] left-1/2 flex h-16 w-16 -translate-x-1/2 items-center justify-center rounded-xl bg-brand-secondary text-brand-primary shadow-[0_0_18px_rgba(20,184,166,0.35)]">
-          <span className="h-8 w-8"><StageIcon type={stage.icon} /></span>
+        {stageLabel}
+      </span>
+
+      <div className="flex items-start justify-between gap-4">
+        <span className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-secondary text-brand-primary shadow-[0_0_24px_rgba(20,184,166,0.35)] transition-transform duration-500 group-hover:scale-105 group-hover:-rotate-3">
+          <span className="h-7 w-7"><StageIcon type={stage.icon} /></span>
+        </span>
+        <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 font-brand-secondary text-[11px] font-semibold uppercase tracking-[0.18em] text-white/55 backdrop-blur-sm">
+          Stage <span className="text-brand-secondary">{stageLabel}</span>
         </span>
       </div>
 
-      <h3 className="mt-10 max-w-[190px] font-brand-primary text-base font-700 leading-tight text-brand-secondary transition-colors">
+      <h3 className="mt-7 font-brand-primary text-xl font-700 leading-snug text-white sm:text-[1.35rem]">
         {stage.title}
       </h3>
+
+      <div className="mt-5 h-px w-full bg-gradient-to-r from-brand-secondary/40 via-white/10 to-transparent" aria-hidden="true" />
+
+      <ul className="mt-5 grid flex-1 grid-cols-1 gap-x-4 gap-y-3 sm:grid-cols-2">
+        {stage.subItems.map((item) => (
+          <li key={item} className="flex items-start gap-2.5 font-brand-secondary text-sm font-normal leading-snug text-white/65">
+            <span className="mt-[3px] flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-brand-secondary/15 text-brand-secondary" aria-hidden="true">
+              <svg viewBox="0 0 12 12" fill="none" className="h-2.5 w-2.5">
+                <path d="m2.5 6.2 2.2 2.2 4.8-4.9" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
+            {item}
+          </li>
+        ))}
+      </ul>
     </motion.article>
   )
 }
-
 function ProcessFaqs() {
   const [openIndex, setOpenIndex] = useState(1)
 
@@ -179,11 +215,15 @@ function ProcessFaqs() {
   }
 
   return (
-    <section
+    <motion.section
       id="process-faqs"
       data-navbar-light
       className="bg-brand-surface px-6 pb-20 pt-0 sm:px-8 sm:pb-24 lg:pb-32 lg:pt-0"
       aria-labelledby="process-faqs-heading"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <div className="mx-auto max-w-5xl">
         <motion.div
@@ -243,22 +283,29 @@ function ProcessFaqs() {
           })}
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 
 function Process() {
   return (
-    <>
+    <motion.main
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
       <Seo
         title="Our Process"
         description="See how Codorium turns ambitious AI ideas into transparent, production-ready systems through a proven delivery process."
         path="/process"
       />
 
-      <section
+      <motion.section
         className="relative isolate flex min-h-[calc(100vh-1px)] items-center overflow-hidden bg-[#060e1f]"
         aria-labelledby="process-title"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
       >
         <NeuralCanvas />
 
@@ -365,13 +412,17 @@ function Process() {
             />
           </svg>
         </div>
-      </section>
+      </motion.section>
 
-      <section
+      <motion.section
         id="process-overview"
         data-navbar-light
         className="overflow-hidden bg-brand-surface pb-20 pt-10 sm:pb-24 sm:pt-14 lg:pb-32 lg:pt-20"
         aria-labelledby="process-overview-heading"
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
       >
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-6 sm:px-8 lg:grid-cols-[1.02fr_0.98fr] lg:gap-14 lg:px-8">
           <motion.div
@@ -431,9 +482,13 @@ function Process() {
                 { value: '6', label: 'Stages' },
                 { value: '2-Wk', label: 'Sprints' },
                 { value: '100%', label: 'Milestone visibility' },
-              ].map((stat) => (
-                <div
+              ].map((stat, index) => (
+                <motion.div
                   key={stat.label}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.5, delay: 0.15 + index * 0.1, ease: 'easeOut' }}
                   className="rounded-2xl px-4 py-4 text-center"
                   style={{
                     background: 'linear-gradient(135deg, #0a2463 0%, #091a3a 60%, #062d26 100%)',
@@ -443,18 +498,22 @@ function Process() {
                 >
                   <p className="font-brand-primary text-lg font-700 text-brand-secondary sm:text-xl">{stat.value}</p>
                   <p className="mt-1 font-brand-secondary text-xs text-white/65 sm:text-sm">{stat.label}</p>
-                </div>
+                </motion.div>
               ))}
             </div>
           </motion.div>
         </div>
-      </section>
+      </motion.section>
 
-      <section
+      <motion.section
         id="six-stages"
         data-navbar-light
         className="overflow-hidden bg-brand-surface px-6 pb-20 pt-0 sm:px-8 sm:pb-24 lg:pb-32 lg:pt-0"
         aria-labelledby="six-stages-heading"
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
       >
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <motion.div
@@ -476,44 +535,29 @@ function Process() {
           </motion.div>
 
           <div className="relative mt-14 lg:mt-20">
-            <div className="hidden items-start lg:flex">
-              {PROCESS_STAGES.map((stage, index) => (
-                <Fragment key={stage.number}>
-                  <div className="flex min-w-0 flex-1 flex-col items-center justify-start">
-                    <ProcessStage stage={stage} index={index} />
-                  </div>
-                  {index < PROCESS_STAGES.length - 1 && (
-                    <motion.span
-                      initial={{ opacity: 0, x: -8 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true, amount: 0.3 }}
-                      transition={{ duration: 0.35, delay: 0.25 + index * 0.1 }}
-                      className="mt-[44px] flex h-8 w-8 shrink-0 items-center text-brand-primary"
-                      aria-hidden="true"
-                    >
-                      <svg viewBox="0 0 64 32" fill="none" className="h-full w-full">
-                        <path d="M2 24C16 4 38 4 58 18M58 18l-8-1M58 18l-2-8" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </motion.span>
-                  )}
-                </Fragment>
-              ))}
-            </div>
-
-            <div className="grid gap-10 sm:grid-cols-2 lg:hidden">
+            <div
+              className="pointer-events-none absolute left-1/2 top-1/2 h-[70%] w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.07] blur-3xl"
+              style={{ background: 'radial-gradient(circle, #14b8a6 0%, transparent 70%)' }}
+              aria-hidden="true"
+            />
+            <div className="relative grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7">
               {PROCESS_STAGES.map((stage, index) => (
                 <ProcessStage key={stage.number} stage={stage} index={index} />
               ))}
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      <section
+      <motion.section
         id="how-we-deliver"
         data-navbar-light
         className="bg-brand-surface px-6 pb-20 pt-0 sm:px-8 sm:pb-24 lg:pb-32 lg:pt-0"
         aria-labelledby="how-we-deliver-heading"
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
       >
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <motion.div
@@ -542,7 +586,7 @@ function Process() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ duration: 0.45, delay: index * 0.07, ease: 'easeOut' }}
-                whileHover={{ y: -4 }}
+                whileHover={{ y: -4, transition: { duration: 0.25, ease: 'easeOut' } }}
                 className={`group min-h-[226px] rounded-2xl border p-6 shadow-lg transition-transform duration-200 ${
                   principle.dark
                     ? 'border-white/8 bg-[#0b1628] text-white shadow-brand-primary/15'
@@ -570,13 +614,17 @@ function Process() {
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      <section
+      <motion.section
         id="timeline"
         data-navbar-light
         className="overflow-hidden bg-brand-surface px-6 pb-20 pt-0 sm:px-8 sm:pb-24 lg:pb-32 lg:pt-0"
         aria-labelledby="timeline-heading"
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
       >
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <motion.div
@@ -605,11 +653,11 @@ function Process() {
               hidden: {},
               visible: {},
             }}
-            className="relative mx-auto mt-12 max-w-6xl overflow-x-auto pb-2"
+            className="relative mx-auto mt-12 max-w-6xl overflow-visible"
           >
-            <div className="relative min-w-[720px] px-2">
-              <div className="absolute left-[12.5%] right-[12.5%] top-4 h-px bg-brand-border" aria-hidden="true" />
-              <div className="pointer-events-none absolute left-[12.5%] right-[12.5%] top-[13px] z-0 h-1.5" aria-hidden="true">
+            <div className="relative -my-5 min-w-[720px] overflow-x-auto px-2 pb-4 pt-6">
+              {/* Rail spans first to last circle centre: pt-6 (24px) + half of h-8 (16px) = 40px; px-2 + gap-5 accounted for horizontally */}
+              <div className="pointer-events-none absolute left-[calc(8px+(100%-76px)/8)] right-[calc(8px+(100%-76px)/8)] top-[40px] z-0 h-[2px] -translate-y-1/2" aria-hidden="true">
                 <motion.span
                   initial={{ width: '0%' }}
                   animate={{
@@ -621,7 +669,7 @@ function Process() {
                     repeat: Infinity,
                     times: [0, 0.1, 0.3, 0.4, 0.6, 0.7, 0.9, 1],
                   }}
-                  className="absolute left-0 top-0 block h-full rounded-full bg-brand-secondary shadow-[0_0_10px_rgba(20,184,166,0.8),0_0_20px_rgba(20,184,166,0.35)]"
+                  className="absolute left-0 top-0 block h-full rounded-full bg-brand-secondary"
                 />
               </div>
               <div className="flex w-full flex-row flex-nowrap gap-5">
@@ -648,7 +696,7 @@ function Process() {
             </div>
           </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       <Testimonials />
       <ProcessFaqs />
@@ -661,7 +709,7 @@ function Process() {
         scheduleHref="mailto:hello@codorium.com?subject=Schedule%20a%20call"
         flushTop
       />
-    </>
+    </motion.main>
   )
 }
 

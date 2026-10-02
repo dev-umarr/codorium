@@ -69,9 +69,20 @@ function ContactDetails() {
   }
 
   return (
-    <section id="contact-form" className="bg-brand-surface pb-20 pt-10 sm:pb-24 sm:pt-14 lg:pb-32 lg:pt-20">
+    <motion.section
+      id="contact-form"
+      className="bg-brand-surface pb-20 pt-10 sm:pb-24 sm:pt-14 lg:pb-32 lg:pt-20"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
       <div className="mx-auto grid max-w-6xl overflow-hidden rounded-3xl border border-brand-border bg-white shadow-[0_24px_70px_rgba(10,36,99,0.12)] px-0 sm:mx-8 lg:grid-cols-[55fr_45fr] lg:mx-auto">
-        <div
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
           className="order-2 bg-brand-surface p-6 sm:p-8 lg:order-1 lg:p-10"
         >
           {submitted ? (
@@ -154,7 +165,7 @@ function ContactDetails() {
               </div>
             </form>
           )}
-        </div>
+        </motion.div>
 
         <div
           className="order-1 flex min-w-0 flex-col justify-between p-6 sm:p-8 lg:order-2 lg:p-10"
@@ -164,23 +175,35 @@ function ContactDetails() {
             boxShadow: '0 0 16px rgba(20,184,166,0.12), 0 0 2px rgba(20,184,166,0.2), inset 0 0 20px rgba(20,184,166,0.04)',
           }}
         >
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.5 }}
+          >
             <span className="inline-flex rounded-full border border-brand-secondary/70 px-4 py-1.5 font-brand-secondary text-xs font-semibold uppercase tracking-[0.14em] text-brand-secondary">CONTACT US</span>
             <h2 className="mt-5 font-brand-primary text-3xl font-700 leading-tight text-white sm:text-4xl">Let&apos;s get in <span className="text-brand-secondary">touch!</span></h2>
             <p className="mt-5 font-brand-secondary text-sm leading-relaxed text-white/65 sm:text-base">Thank you for considering Codorium for your digital and AI solutions. We&apos;re here to answer your questions, understand your goals, and help you build scalable solutions that drive real growth.</p>
-          </div>
+          </motion.div>
 
           <div className="mt-8 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
             {[
               ['Email', 'hello@codorium.com', '✉'],
               ['Phone', 'Available on request', '☎'],
               ['Business Hours', 'Mon-Fri, 9am-6pm PKT', '◷'],
-            ].map(([label, value, icon]) => (
-              <div key={label} className="min-w-0 rounded-xl border border-brand-secondary/25 bg-white/5 px-2.5 py-3 shadow-sm sm:p-3">
+            ].map(([label, value, icon], index) => (
+              <motion.div
+                key={label}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: (index % 3) * 0.1, ease: 'easeOut' }}
+                className="min-w-0 rounded-xl border border-brand-secondary/25 bg-white/5 px-2.5 py-3 shadow-sm sm:p-3"
+              >
                 <span className="text-lg text-brand-secondary" aria-hidden="true">{icon}</span>
                 <p className="mt-2 font-brand-secondary text-xs font-600 text-white/55">{label}</p>
                 <p className="mt-1 whitespace-nowrap font-brand-secondary text-[10px] tracking-[-0.01em] text-white sm:text-[11px]">{value}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
 
@@ -199,7 +222,13 @@ function ContactDetails() {
             ))}
           </div>
 
-          <div className="mt-6 overflow-hidden rounded-2xl border border-brand-secondary/25 bg-brand-bg shadow-[0_12px_30px_rgba(0,0,0,0.2)]">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.97 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            className="mt-6 overflow-hidden rounded-2xl border border-brand-secondary/25 bg-brand-bg shadow-[0_12px_30px_rgba(0,0,0,0.2)]"
+          >
             <iframe
               title="Codorium location map"
               src="https://www.openstreetmap.org/export/embed.html?bbox=72.95%2C33.62%2C73.15%2C33.75&layer=mapnik&marker=33.6844%2C73.0479"
@@ -209,10 +238,10 @@ function ContactDetails() {
               allowFullScreen
             />
             <a href="https://www.openstreetmap.org/?mlat=33.6844&mlon=73.0479#map=12/33.6844/73.0479" target="_blank" rel="noopener noreferrer" className="block border-t border-white/10 bg-[#08162a] px-3 py-2 font-brand-secondary text-[10px] uppercase tracking-[0.14em] text-white/45 transition-colors hover:text-brand-secondary">View larger map</a>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 
@@ -224,22 +253,43 @@ function FAQ() {
   }
 
   return (
-    <section id="faq" className="bg-brand-surface px-6 pb-20 pt-0 sm:px-8 sm:pb-24 lg:pb-32 lg:pt-0" aria-labelledby="faq-heading">
+    <motion.section
+      id="faq"
+      className="bg-brand-surface px-6 pb-20 pt-0 sm:px-8 sm:pb-24 lg:pb-32 lg:pt-0"
+      aria-labelledby="faq-heading"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
       <div className="mx-auto max-w-5xl">
-        <div className="text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.5 }}
+          className="text-center"
+        >
           <span className="inline-flex rounded-full border border-brand-secondary/70 px-4 py-1.5 font-brand-secondary text-xs font-semibold uppercase tracking-[0.14em] text-brand-secondary">
             FAQ
           </span>
           <h2 id="faq-heading" className="mt-5 font-brand-primary text-4xl font-700 leading-tight text-brand-primary sm:text-5xl">
             Frequently Asked Questions
           </h2>
-        </div>
+        </motion.div>
 
         <div className="mt-10 flex flex-col gap-3">
           {FAQ_ITEMS.map((item, index) => {
             const isOpen = openIndex === index
             return (
-              <div key={item.question} className="overflow-hidden rounded-2xl border border-brand-border bg-white shadow-lg shadow-brand-primary/5">
+              <motion.div
+                key={item.question}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: index * 0.06, ease: 'easeOut' }}
+                className="overflow-hidden rounded-2xl border border-brand-border bg-white shadow-lg shadow-brand-primary/5"
+              >
                 <button
                   type="button"
                   aria-expanded={isOpen}
@@ -262,27 +312,34 @@ function FAQ() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             )
           })}
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 
 function Contact() {
   return (
-    <>
+    <motion.main
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
       <Seo
         title="Contact Us"
         description="Tell Codorium about your goals and connect with our experts to start building intelligent, production-ready systems."
         path="/contact"
       />
 
-      <section
+      <motion.section
         className="relative isolate flex min-h-[calc(100vh-1px)] items-center overflow-hidden bg-[#060e1f]"
         aria-labelledby="contact-title"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
       >
         <NeuralCanvas />
 
@@ -392,11 +449,11 @@ function Contact() {
             />
           </svg>
         </div>
-      </section>
+      </motion.section>
       <ContactDetails />
       <FAQ />
       <AboutCTA flushTop />
-    </>
+    </motion.main>
   )
 }
 

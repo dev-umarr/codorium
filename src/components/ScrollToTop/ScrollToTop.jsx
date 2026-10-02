@@ -1,10 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useLocation } from 'react-router-dom'
 
 export default function ScrollToTop() {
+  const { pathname } = useLocation()
   const [visible, setVisible] = useState(false)
   const lastScrollY = useRef(0)
   const stopTimer = useRef(null)
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    lastScrollY.current = 0
+  }, [pathname])
 
   useEffect(() => {
     const onScroll = () => {

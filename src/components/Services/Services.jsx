@@ -161,7 +161,15 @@ function Services() {
   const [row2Ref, row2InView] = useInView()
 
   return (
-    <section id="services" data-navbar-light className="bg-brand-surface pt-12 pb-24 lg:pt-14 lg:pb-32">
+    <motion.section
+      id="services"
+      data-navbar-light
+      className="bg-brand-surface pt-12 pb-24 lg:pt-14 lg:pb-32"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
 
         {/* ── Header ── */}
@@ -285,7 +293,7 @@ function Services() {
         </div>
 
       </div>
-    </section>
+    </motion.section>
   )
 }
 

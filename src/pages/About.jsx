@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import AboutUsSection from '../components/AboutUsSection/AboutUsSection'
 import AboutCTA from '../components/AboutCTA/AboutCTA'
 import CoreValues from '../components/CoreValues/CoreValues'
-import Experts from '../components/Experts/Experts'
 import Foundation from '../components/Foundation/Foundation'
 import { NeuralCanvas } from '../components/Hero/Hero'
 import Seo from '../components/SEO/Seo'
@@ -11,16 +10,23 @@ import Testimonials from '../components/Testimonials/Testimonials'
 
 function About() {
   return (
-    <>
+    <motion.main
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
       <Seo
         title="About Codorium"
         description="Meet the AI engineers, scientists, and strategists helping ambitious organizations move from AI curiosity to AI advantage."
         path="/about"
       />
 
-      <section
+      <motion.section
         className="relative isolate flex min-h-[calc(100vh-1px)] items-center overflow-hidden bg-[#060e1f]"
         aria-labelledby="about-title"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
       >
         <NeuralCanvas />
 
@@ -129,14 +135,13 @@ function About() {
             />
           </svg>
         </div>
-      </section>
+      </motion.section>
       <AboutUsSection />
       <Foundation />
       <Testimonials />
       <CoreValues />
-      <Experts />
       <AboutCTA flushTop />
-    </>
+    </motion.main>
   )
 }
 

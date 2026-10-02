@@ -173,7 +173,14 @@ function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+    <motion.form
+      onSubmit={handleSubmit}
+      initial={{ opacity: 0, x: 24 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, delay: 0.08, ease: 'easeOut' }}
+      className="flex flex-col gap-5"
+    >
       {/* Name + Email row */}
       <div className="grid gap-3 sm:grid-cols-2">
         <input className={inputCls} placeholder="Your name" value={form.name} onChange={set('name')} required />
@@ -252,7 +259,7 @@ function ContactForm() {
           <path d="M2.5 11.5L11.5 2.5M11.5 2.5H5.5M11.5 2.5V8.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </motion.button>
-    </form>
+    </motion.form>
   )
 }
 
@@ -294,7 +301,13 @@ function Footer() {
 
           <div className="relative grid items-stretch gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
             {/* ── Left ── */}
-            <div className="flex flex-col">
+            <motion.div
+              initial={{ opacity: 0, x: -24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+              className="flex flex-col"
+            >
               {/* Top group */}
               <div className="flex flex-col gap-6">
                 <h2 className="font-brand-primary text-2xl font-700 leading-tight text-white sm:text-3xl lg:text-4xl">
@@ -433,7 +446,7 @@ function Footer() {
                 </div>
               </div>
               </div>{/* end bottom group */}
-            </div>{/* end left column */}
+            </motion.div>{/* end left column */}
 
             {/* ── Right: form ── */}
             <ContactForm />
@@ -445,7 +458,13 @@ function Footer() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-8 py-10 sm:grid-cols-2 sm:gap-10 sm:py-16 lg:grid-cols-[2fr_1fr_1fr_1fr] lg:py-20">
           {/* Brand */}
-          <div className="flex flex-col gap-5">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
+            className="flex flex-col gap-5"
+          >
             <Link
               to="/"
               className="flex items-center no-underline"
@@ -472,11 +491,18 @@ function Footer() {
                 </a>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Link columns */}
-          {Object.entries(FOOTER_LINKS).map(([category, links]) => (
-            <div key={category} className="flex flex-col gap-4">
+          {Object.entries(FOOTER_LINKS).map(([category, links], index) => (
+            <motion.div
+              key={category}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: ((index + 1) % 4) * 0.1, ease: 'easeOut' }}
+              className="flex flex-col gap-4"
+            >
               <h4 className="font-brand-secondary text-xs font-600 uppercase tracking-widest text-white/25">
                 {category}
               </h4>
@@ -503,12 +529,18 @@ function Footer() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* Copyright bar */}
-        <div className="flex flex-col items-center justify-between gap-3 border-t border-white/8 py-6 sm:flex-row">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+          className="flex flex-col items-center justify-between gap-3 border-t border-white/8 py-6 sm:flex-row"
+        >
           <p className="font-brand-secondary text-xs text-white/25">
             © {new Date().getFullYear()} Codorium. All rights reserved.
           </p>
@@ -520,7 +552,7 @@ function Footer() {
               Terms of Service
             </a>
           </div>
-        </div>
+        </motion.div>
       </div>
     </footer>
   )

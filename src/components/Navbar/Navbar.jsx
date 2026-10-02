@@ -53,6 +53,78 @@ const SOCIAL_LINKS = [
   },
 ]
 
+/* ─── Background detection ─────────────────────────────────────── */
+let colorContext
+
+/* Resolves any CSS color (rgb, hex, oklab, color-mix output, …) to [r, g, b, a] */
+function toRgba(color) {
+  colorContext ??= Object.assign(document.createElement('canvas'), { width: 1, height: 1 }).getContext('2d', { willReadFrequently: true })
+  colorContext.clearRect(0, 0, 1, 1)
+  colorContext.fillStyle = '#0000'
+  colorContext.fillStyle = color
+  colorContext.fillRect(0, 0, 1, 1)
+  const [r, g, b, a] = colorContext.getImageData(0, 0, 1, 1).data
+  return [r, g, b, a / 255]
+}
+
+const COLOR_TOKEN = /(?:rgba?|hsla?|oklab|oklch|lab|lch|color)\([^()]*\)|#[0-9a-f]{3,8}\b/gi
+
+/* Averages the opaque colors in an element's background color or gradients */
+function getPaintedBackground(element) {
+  const style = window.getComputedStyle(element)
+  const solid = toRgba(style.backgroundColor)
+  if (solid[3] >= 0.5) return solid
+
+  const tokens = style.backgroundImage.includes('gradient(') ? style.backgroundImage.match(COLOR_TOKEN) || [] : []
+  let red = 0, green = 0, blue = 0, alpha = 0
+  tokens.map(toRgba).forEach(([r, g, b, a]) => {
+    red += r * a; green += g * a; blue += b * a; alpha += a
+  })
+  if (tokens.length === 0 || alpha / tokens.length < 0.5) return null
+  return [red / alpha, green / alpha, blue / alpha, alpha / tokens.length]
+}
+
+/* Splits opacity into styled (translucent by design) and animated (inline, set by fade-ins) */
+function getEffectiveOpacity(element) {
+  let styled = 1
+  let animated = 1
+  for (let node = element; node && node !== document.documentElement; node = node.parentElement) {
+    const opacity = Number(window.getComputedStyle(node).opacity)
+    if (node.style.opacity) animated *= opacity
+    else styled *= opacity
+  }
+  return { styled, animated }
+}
+
+/* true = light background at (x, y), false = dark, null = unknown */
+function isLightBackgroundAt(x, y, header) {
+  if (x < 0 || y < 0 || x > window.innerWidth || y > window.innerHeight) return null
+
+  let skippedFadingIn = false
+
+  for (const element of document.elementsFromPoint(x, y)) {
+    if (header?.contains(element)) continue
+    /* Only the page background is left because content is still fading in (e.g. on load) */
+    if (skippedFadingIn && (element === document.body || element === document.documentElement)) return null
+    if (element.closest('[data-navbar-light]') === element) return true
+    if (element.closest('[data-navbar-dark]') === element) return false
+
+    const color = getPaintedBackground(element)
+    if (!color) continue
+    const { styled, animated } = getEffectiveOpacity(element)
+    if (styled < 0.5) continue
+    if (animated < 0.5) {
+      skippedFadingIn = true
+      continue
+    }
+
+    const [r, g, b] = color
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b > 150
+  }
+
+  return null
+}
+
 /* ─── Main component ───────────────────────────────────────────── */
 function Navbar() {
   const routeNavigate = useNavigate()
@@ -62,37 +134,37 @@ function Navbar() {
   const [visible, setVisible]     = useState(true)
   const lastScrollY               = useRef(0)
   const scrollTimer               = useRef(null)
+  const headerRef                 = useRef(null)
+  const logoRef                   = useRef(null)
 
-  /* Swap logo when navbar floats over a light-background section */
+  /* Swap logo based on the background actually painted behind it */
   useEffect(() => {
-    let observer
     let frameId
-    const intersecting = new Set()
 
-    frameId = window.requestAnimationFrame(() => {
-      setLightBg(false)
-      const lightSections = document.querySelectorAll(
-        '[data-navbar-light], [data-theme="light"], section.bg-brand-surface, section.bg-white'
-      )
+    function update() {
+      frameId = undefined
+      const logo = logoRef.current
+      if (!logo) return
+      const rect = logo.getBoundingClientRect()
+      const isLight = isLightBackgroundAt(rect.left + rect.width / 2, rect.top + rect.height / 2, headerRef.current)
+      if (isLight !== null) setLightBg(isLight)
+    }
 
-      observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) intersecting.add(entry.target)
-            else intersecting.delete(entry.target)
-          })
-          setLightBg(intersecting.size > 0)
-        },
-        { rootMargin: '0px 0px -88% 0px' }
-      )
+    function scheduleUpdate() {
+      if (frameId === undefined) frameId = window.requestAnimationFrame(update)
+    }
 
-      lightSections.forEach((section) => observer.observe(section))
-    })
+    scheduleUpdate()
+    /* Sections fade in after mount, so re-check periodically as well as on scroll */
+    const intervalId = window.setInterval(scheduleUpdate, 400)
+    window.addEventListener('scroll', scheduleUpdate, { passive: true })
+    window.addEventListener('resize', scheduleUpdate)
 
     return () => {
-      window.cancelAnimationFrame(frameId)
-      observer?.disconnect()
-      intersecting.clear()
+      if (frameId !== undefined) window.cancelAnimationFrame(frameId)
+      window.clearInterval(intervalId)
+      window.removeEventListener('scroll', scheduleUpdate)
+      window.removeEventListener('resize', scheduleUpdate)
     }
   }, [pathname])
 
@@ -147,6 +219,7 @@ function Navbar() {
     <>
       {/* ── Top bar ────────────────────────────────────────────── */}
       <motion.header
+        ref={headerRef}
         className="fixed top-0 left-0 right-0 z-50 w-full"
         animate={{ y: visible || menuOpen ? 0 : '-100%' }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
@@ -159,6 +232,7 @@ function Navbar() {
             className="flex items-center no-underline"
           >
             <img
+              ref={logoRef}
               src={lightBg ? logoDarkUrl : logoWhiteUrl}
               alt="Codorium"
               className="h-6 w-auto transition-opacity duration-300 sm:h-8"

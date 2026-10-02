@@ -7,8 +7,6 @@ const TEAM = [
   { name: 'Sadam Mehmood', role: 'UI/UX Designer', bio: 'Turns complex workflows into clear, useful experiences that feel effortless to use.' },
   { name: 'Fasial Khalid', role: 'Frontend Developer', bio: 'Creates responsive interfaces that bring product ideas to life with precision and speed.' },
   { name: 'Hamza Farooq', role: 'AI Engineer', bio: 'Designs practical AI systems that connect models to real operational outcomes.' },
-  { name: 'Saleem Khan', role: 'Product Strategist', bio: 'Shapes focused product direction around customer needs, measurable value, and momentum.' },
-  { name: 'Owais Ahmed', role: 'Backend Engineer', bio: 'Architects secure, scalable foundations for products that need to perform under pressure.' },
 ]
 
 function ProfileCard({ member, index }) {
@@ -107,13 +105,17 @@ function FounderCard() {
 function Experts() {
   return (
     <>
-      <section
+      <motion.section
         id="experts"
         data-navbar-light
         className="bg-brand-surface px-6 pb-20 pt-0 sm:px-8 sm:pb-24 lg:pb-32 lg:pt-0"
         aria-labelledby="experts-heading"
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
       >
-        <div className="mx-auto max-w-7xl">
+        {/* <div className="mx-auto max-w-7xl">
           <div className="text-center">
             <h2 id="experts-heading" className="font-brand-primary text-4xl font-700 leading-tight text-brand-primary sm:text-5xl">
               Meet our experts
@@ -144,24 +146,28 @@ function Experts() {
               </p>
             </motion.blockquote>
           </div>
-        </div>
-      </section>
+        </div> */}
+      </motion.section>
 
-      <section
+      <motion.section
         id="team"
         data-navbar-light
         className="bg-brand-surface px-6 pb-20 pt-0 sm:px-8 sm:pb-24 lg:pb-32 lg:pt-0"
         aria-labelledby="team-heading"
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
       >
-        <div className="mx-auto max-w-7xl">
+        {/* <div className="mx-auto max-w-7xl">
           <h2 id="team-heading" className="text-center font-brand-primary text-4xl font-700 leading-tight text-brand-primary sm:text-5xl">
             Our Team Members
           </h2>
           <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {TEAM.map((member, index) => <ProfileCard key={member.name} member={member} index={index} />)}
           </div>
-        </div>
-      </section>
+        </div> */}
+      </motion.section>
     </>
   )
 }
