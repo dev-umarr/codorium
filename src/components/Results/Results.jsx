@@ -7,8 +7,8 @@ export default function Results() {
   const [ref, inView] = useInView()
 
   return (
-    <section data-navbar-light className="bg-brand-surface px-6 pb-8 lg:px-8">
-      <div className="mx-auto max-w-7xl">
+    <section data-navbar-light className="bg-brand-surface pb-8">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           ref={ref}
           className="relative overflow-hidden rounded-2xl px-5 py-8 sm:px-10 sm:py-10 lg:px-16 lg:py-12"
@@ -23,7 +23,7 @@ export default function Results() {
         >
           {/* faint teal glow top-left */}
           <div
-            className="pointer-events-none absolute -top-16 -left-16 h-[280px] w-[280px] opacity-15"
+            className="pointer-events-none absolute -top-16 -left-16 h-[17.5rem] w-[17.5rem] opacity-15"
             style={{ background: 'radial-gradient(circle, #14b8a6, transparent 65%)' }}
           />
 
@@ -80,7 +80,7 @@ export default function Results() {
 
             {/* Right: comparison visual + tool pills */}
             <motion.div
-              className="flex flex-col gap-5 sm:min-w-[300px] lg:min-w-[340px]"
+              className="flex flex-col gap-5 sm:min-w-[18.75rem] lg:min-w-[21.25rem]"
               initial={{ opacity: 0, x: 16 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}

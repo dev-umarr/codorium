@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { useInView } from '../../hooks/useInView'
 import { openBookingModal } from '../../utils/calendly'
 
@@ -16,11 +17,38 @@ function ArrowIcon({ direction = 'next' }) {
   )
 }
 
+// Internal paths use client-side routing, same-page anchors scroll smoothly,
+// and anything else (mailto:, external URLs) falls back to a plain anchor.
+function CTALink({ href, children, ...props }) {
+  if (href.startsWith('/')) {
+    return <Link to={href} {...props}>{children}</Link>
+  }
+
+  if (href.startsWith('#')) {
+    return (
+      <a
+        href={href}
+        onClick={(event) => {
+          const target = document.querySelector(href)
+          if (!target) return
+          event.preventDefault()
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }}
+        {...props}
+      >
+        {children}
+      </a>
+    )
+  }
+
+  return <a href={href} {...props}>{children}</a>
+}
+
 function AboutCTA({
   title = <>Ready To Build The <span className="text-brand-secondary">Future</span> With AI?</>,
   description = 'Partner with Codorium to turn ambitious ideas into intelligent, production-ready systems.',
   contactLabel = 'Contact Us',
-  contactHref = 'mailto:hello@codorium.com',
+  contactHref = '/contact',
   scheduleLabel = 'Schedule a Meeting',
   scheduleHref = 'mailto:hello@codorium.com?subject=Schedule%20a%20meeting',
   primaryFirst = false,
@@ -64,7 +92,7 @@ function AboutCTA({
             </p>
 
             <div className="mt-4 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row sm:gap-4">
-              <a
+              <CTALink
                 href={contactHref}
                 className={`group inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3 font-brand-secondary text-sm font-semibold transition-all hover:-translate-y-0.5 sm:w-auto ${
                   primaryFirst
@@ -74,7 +102,7 @@ function AboutCTA({
               >
                 {contactLabel}
                 <span className="transition-transform group-hover:translate-x-1"><ArrowIcon /></span>
-              </a>
+              </CTALink>
               <a
                 href={scheduleHref}
                 onClick={(event) => {

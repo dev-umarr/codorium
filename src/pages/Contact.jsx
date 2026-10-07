@@ -71,7 +71,7 @@ function ContactDetails() {
   return (
     <motion.section
       id="contact-form"
-      className="bg-brand-surface pb-20 pt-10 sm:pb-24 sm:pt-14 lg:pb-32 lg:pt-20"
+      className="scroll-mt-24 bg-brand-surface pb-20 pt-10 sm:pb-24 sm:pt-14 lg:pb-32 lg:pt-20"
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.15 }}
@@ -421,7 +421,11 @@ function Contact() {
               <span aria-hidden="true">→</span>
             </a>
             <a
-              href="mailto:hello@codorium.com"
+              href="#contact-form"
+              onClick={(event) => {
+                event.preventDefault()
+                document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+              }}
               className="inline-flex items-center gap-2 rounded-lg border border-brand-secondary/60 px-7 py-3.5 font-brand-secondary text-base font-semibold text-brand-secondary transition-all hover:-translate-y-px hover:bg-brand-secondary/10"
             >
               Send a Message
@@ -452,7 +456,7 @@ function Contact() {
       </motion.section>
       <ContactDetails />
       <FAQ />
-      <AboutCTA flushTop />
+      <AboutCTA contactHref="#contact-form" flushTop />
     </motion.main>
   )
 }

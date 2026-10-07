@@ -16,9 +16,32 @@
   --font-brand-secondary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
 
+/*
+ * Page container — every section shares `max-w-7xl`. It stays at 80rem
+ * (1280px) through MacBook widths, then widens on large desktops so wide
+ * screens don't end up with oversized side gutters.
+ */
+@media (min-width: 1536px) {
+  :root {
+    --container-7xl: 88rem;
+  }
+}
+
+@media (min-width: 1800px) {
+  :root {
+    --container-7xl: 96rem;
+  }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
+    /*
+     * Fluid root size: 16px up to 1920px, then scales with the viewport
+     * (≈21px at 2560px) so the whole rem-based layout grows proportionally
+     * on QHD/4K screens instead of shrinking into the middle.
+     */
+    font-size: clamp(100%, 0.8333vw, 150%);
   }
 
   body {

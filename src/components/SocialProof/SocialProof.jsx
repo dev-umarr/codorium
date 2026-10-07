@@ -47,8 +47,8 @@ export default function SocialProof() {
   const [ref, inView] = useInView()
 
   return (
-    <section data-navbar-light className="bg-brand-surface px-6 pt-10 pb-20 lg:px-8 lg:pt-14 lg:pb-28">
-      <div className="mx-auto max-w-7xl">
+    <section data-navbar-light className="bg-brand-surface pt-10 pb-20 lg:pt-14 lg:pb-28">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           ref={ref}
           className="relative overflow-hidden rounded-2xl px-5 py-10 sm:px-10 sm:py-14 lg:px-16 lg:py-16"
@@ -61,12 +61,12 @@ export default function SocialProof() {
         >
           {/* Teal glow — bottom right */}
           <div
-            className="pointer-events-none absolute bottom-0 right-0 h-[360px] w-[360px] opacity-20"
+            className="pointer-events-none absolute bottom-0 right-0 h-[22.5rem] w-[22.5rem] opacity-20"
             style={{ background: 'radial-gradient(circle at 80% 80%, #14b8a6, transparent 60%)' }}
           />
           {/* Blue glow — top left */}
           <div
-            className="pointer-events-none absolute -top-20 -left-20 h-[300px] w-[300px] opacity-10"
+            className="pointer-events-none absolute -top-20 -left-20 h-[18.75rem] w-[18.75rem] opacity-10"
             style={{ background: 'radial-gradient(circle, #0a2463, transparent 65%)' }}
           />
 

@@ -151,7 +151,7 @@ export default function WhyCodorium() {
             return (
               <div key={card.id} className="sticky pb-3" style={{ top: topPx, zIndex }}>
                 <div
-                  className="relative min-h-[220px] overflow-hidden"
+                  className="relative min-h-[13.75rem] overflow-hidden"
                   style={{
                     borderRadius: '1.75rem',
                     background: '#0c1a2e',
@@ -195,7 +195,7 @@ export default function WhyCodorium() {
           {CARDS.map((card, i) => (
             <motion.div
               key={card.id}
-              className="relative min-h-[200px] overflow-hidden"
+              className="relative min-h-[12.5rem] overflow-hidden"
               style={{ borderRadius: '1.75rem', background: card.bg }}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -235,7 +235,7 @@ export default function WhyCodorium() {
         {/* ── Desktop accordion (hidden below lg) ── */}
         <div
           className="hidden gap-3 lg:flex"
-          style={{ height: '540px' }}
+          style={{ height: '33.75rem' }}
           onMouseLeave={() => setHovered(null)}
         >
           {CARDS.map((card, i) => {

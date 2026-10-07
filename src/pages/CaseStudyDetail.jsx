@@ -2,6 +2,8 @@ import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import fundraiseUpHeroImage from '../assets/Case-studies/FundraiseUp/Fundraising_Hero.png'
+import fundraiseUpLaptopShowcaseImage from '../assets/Case-studies/FundraiseUp/FundraiseUpLaptopHeroShowcase.png'
+import fundraiseUpSaaSTabletImage from '../assets/Case-studies/FundraiseUp/FundraiseUpSaaSTablet.png'
 import AboutCTA from '../components/AboutCTA/AboutCTA'
 import { NeuralCanvas } from '../components/Hero/Hero'
 import Seo from '../components/SEO/Seo'
@@ -21,7 +23,7 @@ function Reveal({ children, className = '', delay = 0, x = 0, y = 22, scale = 1,
   )
 }
 
-function DetailSection({ eyebrow, title, description, children, dark = false, spaceBefore = false }) {
+function DetailSection({ eyebrow, title, description, children, dark = false, spaceBefore = false, introAlign = 'sticky' }) {
   return (
     <motion.section
       className={dark ? `relative overflow-hidden bg-[#071426] pb-16 text-white sm:pb-20 lg:pb-24 ${spaceBefore ? 'pt-14 sm:pt-16 lg:pt-20' : 'pt-0 lg:pt-0'}` : `relative overflow-hidden bg-white pb-16 sm:pb-20 lg:pb-24 ${spaceBefore ? 'pt-14 sm:pt-16 lg:pt-20' : 'pt-0 lg:pt-0'}`}
@@ -32,7 +34,7 @@ function DetailSection({ eyebrow, title, description, children, dark = false, sp
     >
       <div className="pointer-events-none absolute -right-32 top-10 h-72 w-72 rounded-full bg-brand-secondary/10 blur-3xl" aria-hidden="true" />
       <div className="relative mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20 lg:px-8">
-        <Reveal x={-24} y={0} duration={0.6} className="self-start lg:sticky lg:top-28">
+        <Reveal x={-24} y={0} duration={0.6} className={introAlign === 'center' ? 'self-center' : 'self-start lg:sticky lg:top-28'}>
           <div className="border-l-2 border-brand-secondary pl-5">
             <p className="font-brand-secondary text-xs font-700 uppercase tracking-[0.18em] text-brand-secondary">{eyebrow}</p>
             <h2 className={`mt-4 max-w-md font-brand-primary text-3xl font-700 leading-[1.08] sm:text-5xl ${dark ? 'text-white' : 'text-brand-primary'}`}>{title}</h2>
@@ -378,7 +380,7 @@ function CaseStudyDetail() {
 
   const isFundraiseUp = slug === 'fundraise-up'
   const heroImage = isFundraiseUp ? fundraiseUpHeroImage : study.image
-  const projectVisuals = [study.image, study.image]
+  const projectVisuals = [isFundraiseUp ? fundraiseUpLaptopShowcaseImage : study.image, isFundraiseUp ? fundraiseUpSaaSTabletImage : study.image]
 
   return (
     <motion.main
@@ -450,8 +452,8 @@ function CaseStudyDetail() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.15 }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
-      ><div className="mx-auto max-w-7xl lg:px-8"><Reveal y={16} duration={0.5} amount={0.35}><p className="font-brand-secondary text-xs font-700 uppercase tracking-[0.18em] text-brand-secondary">Project Visuals</p><h2 className="mt-4 font-brand-primary text-3xl font-700 text-brand-primary sm:text-5xl">Inside the experience.</h2></Reveal><div className="mt-10 grid gap-6 md:grid-cols-2">{['Interface direction and product story', 'Responsive product experience'].map((caption, index) => <Reveal key={caption} y={0} scale={0.97} duration={0.6} delay={(index % 2) * 0.1} className="group overflow-hidden rounded-2xl border border-brand-border bg-white shadow-lg shadow-brand-primary/5"><div className="overflow-hidden"><img src={projectVisuals[index]} alt={`${study.title} project detail`} className="aspect-[16/10] h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" /></div><figcaption className="flex items-center justify-between px-5 py-4 font-brand-secondary text-sm text-brand-primary/55"><span>{caption}</span><span className="text-brand-secondary">0{index + 1}</span></figcaption></Reveal>)}</div></div></motion.section>
-      <DetailSection eyebrow="Results / Outcomes" title="Progress the team can build on."><ul className="grid gap-4 sm:grid-cols-3">{study.outcomes.map((outcome, index) => <motion.li key={outcome} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: (index % 3) * 0.1, ease: 'easeOut' }} className="group relative overflow-hidden rounded-[1.5rem] border border-brand-border bg-brand-bg p-6 text-sm shadow-[0_12px_30px_rgba(10,36,99,0.05)] transition-all duration-300 hover:-translate-y-1 hover:border-brand-secondary/45 hover:bg-white sm:p-7"><span className="font-brand-primary text-3xl font-700 text-brand-secondary/70 transition-colors group-hover:text-brand-secondary">0{index + 1}</span><p className="mt-10 font-brand-secondary leading-relaxed text-brand-primary/70">{outcome}</p></motion.li>)}</ul></DetailSection>
+      ><div className="mx-auto max-w-7xl lg:px-8"><Reveal y={16} duration={0.5} amount={0.35}><p className="font-brand-secondary text-xs font-700 uppercase tracking-[0.18em] text-brand-secondary">Project Visuals</p><h2 className="mt-4 font-brand-primary text-3xl font-700 text-brand-primary sm:text-5xl">Inside the experience.</h2></Reveal><div className="mt-10 grid gap-6 md:grid-cols-2">{['Interface direction and product story', 'Responsive product experience'].map((caption, index) => <Reveal key={caption} y={0} scale={0.97} duration={0.6} delay={(index % 2) * 0.1} className="group overflow-hidden rounded-2xl border border-brand-border bg-white shadow-lg shadow-brand-primary/5">{/* Fundraise Up: identical frames sized to the tablet shot (1439×1093); the laptop shot is contained on its own near-black backdrop */}<div className={isFundraiseUp ? 'aspect-[1439/1093] overflow-hidden bg-[linear-gradient(to_bottom,#040404_50%,#111113_50%)]' : 'overflow-hidden'}><img src={projectVisuals[index]} alt={`${study.title} project detail`} className={`${isFundraiseUp ? 'object-contain' : 'aspect-[16/10] object-cover'} h-full w-full transition-transform duration-700 group-hover:scale-[1.03]`} /></div>{!isFundraiseUp && <figcaption className="flex items-center justify-between px-5 py-4 font-brand-secondary text-sm text-brand-primary/55"><span>{caption}</span><span className="text-brand-secondary">0{index + 1}</span></figcaption>}</Reveal>)}</div></div></motion.section>
+      <DetailSection eyebrow="Results / Outcomes" title="Progress the team can build on." introAlign={isFundraiseUp ? 'center' : 'sticky'}><ul className="grid gap-4 sm:grid-cols-3">{study.outcomes.map((outcome, index) => <motion.li key={outcome} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: (index % 3) * 0.1, ease: 'easeOut' }} className="group relative overflow-hidden rounded-[1.5rem] border border-brand-border bg-brand-bg p-6 text-sm shadow-[0_12px_30px_rgba(10,36,99,0.05)] transition-all duration-300 hover:-translate-y-1 hover:border-brand-secondary/45 hover:bg-white sm:p-7"><span className="font-brand-primary text-3xl font-700 text-brand-secondary/70 transition-colors group-hover:text-brand-secondary">0{index + 1}</span><p className="mt-10 font-brand-secondary leading-relaxed text-brand-primary/70">{outcome}</p></motion.li>)}</ul></DetailSection>
       <AboutCTA title={<>Ready to build something <span className="text-brand-secondary">meaningful</span>?</>} description="Let's map out the next product your team can be proud to ship." contactLabel="Start a Project" contactHref="/contact" primaryFirst flushTop />
     </motion.main>
   )

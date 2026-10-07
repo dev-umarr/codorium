@@ -99,13 +99,13 @@ function About() {
             transition={{ duration: 0.55, delay: 0.3 }}
             className="mt-10 flex flex-wrap items-center justify-center gap-4"
           >
-            <a
-              href="/#services"
+            <Link
+              to="/services"
               className="inline-flex items-center gap-2 rounded-lg bg-brand-secondary px-7 py-3.5 font-brand-secondary text-base font-semibold text-[#06241f] transition-all hover:-translate-y-px hover:bg-brand-secondary-hover hover:shadow-lg hover:shadow-brand-secondary/25"
             >
               Explore Services
               <span aria-hidden="true">→</span>
-            </a>
+            </Link>
             <Link
               to="/contact"
               className="inline-flex items-center gap-2 rounded-lg border border-brand-secondary/60 px-7 py-3.5 font-brand-secondary text-base font-semibold text-brand-secondary transition-all hover:-translate-y-px hover:bg-brand-secondary/10"

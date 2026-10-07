@@ -86,7 +86,7 @@ export default function CaseStudies({ standardPageSpacing = false }) {
               <Link
                 key={item.slug}
                 to={item.path}
-                className="rounded-full border border-brand-border px-3 py-1.5 font-brand-secondary text-[10px] font-600 uppercase tracking-wider text-brand-primary/55 no-underline transition-colors hover:border-brand-secondary hover:text-brand-secondary"
+                className="rounded-full border border-brand-border px-3 py-1.5 font-brand-secondary text-[0.625rem] font-600 uppercase tracking-wider text-brand-primary/55 no-underline transition-colors hover:border-brand-secondary hover:text-brand-secondary"
               >
                 {item.title.split(' - ')[0]}
               </Link>

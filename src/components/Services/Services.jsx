@@ -311,7 +311,7 @@ function MobileIndustryCard({ card }) {
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, amount: 0.05 }}
       transition={{ duration: 0.35 }}
-      className="group relative flex min-h-[200px] flex-col justify-between overflow-hidden rounded-2xl p-6"
+      className="group relative flex min-h-[12.5rem] flex-col justify-between overflow-hidden rounded-2xl p-6"
       style={{
         background: 'linear-gradient(145deg, #091a3a 0%, #060e1f 100%)',
         border: '1px solid rgba(20,184,166,0.20)',
@@ -345,7 +345,7 @@ function MobileIndustryCard({ card }) {
             {card.tags.map((t) => (
               <span
                 key={t}
-                className="rounded-full border border-white/10 px-2.5 py-1 font-brand-secondary text-[11px] text-white/45"
+                className="rounded-full border border-white/10 px-2.5 py-1 font-brand-secondary text-[0.6875rem] text-white/45"
               >
                 {t}
               </span>
@@ -379,7 +379,7 @@ function IndustryCard({ card, index, inView }) {
       variants={cardVariants}
       initial="hidden"
       animate={inView ? 'visible' : 'hidden'}
-      className="group relative flex min-h-[220px] flex-col justify-between overflow-hidden rounded-2xl p-7"
+      className="group relative flex min-h-[13.75rem] flex-col justify-between overflow-hidden rounded-2xl p-7"
       style={{
         background: 'linear-gradient(145deg, #091a3a 0%, #060e1f 100%)',
         border: '1px solid rgba(20,184,166,0.32)',
@@ -427,7 +427,7 @@ function IndustryCard({ card, index, inView }) {
             {card.tags.map((t) => (
               <span
                 key={t}
-                className="rounded-full border border-white/10 px-2.5 py-1 font-brand-secondary text-[11px] text-white/45"
+                className="rounded-full border border-white/10 px-2.5 py-1 font-brand-secondary text-[0.6875rem] text-white/45"
               >
                 {t}
               </span>

@@ -67,7 +67,7 @@ function WhatWeOffer() {
       {/* Glow — kept in its own overflow-hidden so it doesn't bleed horizontally */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
         <div
-          className="absolute bottom-0 -left-24 h-[480px] w-[480px] opacity-15"
+          className="absolute bottom-0 -left-24 h-[30rem] w-[30rem] opacity-15"
           style={{ background: 'radial-gradient(circle at 30% 70%, #14b8a6, transparent 60%)' }}
         />
       </div>
@@ -186,7 +186,7 @@ function MobileStackCard({ offer, index }) {
       </div>
 
       {/* Step number badge */}
-      <span className="mb-2 inline-flex h-6 w-6 items-center justify-center rounded-full border border-brand-secondary/30 font-brand-secondary text-[10px] font-600 text-brand-secondary">
+      <span className="mb-2 inline-flex h-6 w-6 items-center justify-center rounded-full border border-brand-secondary/30 font-brand-secondary text-[0.625rem] font-600 text-brand-secondary">
         {String(index + 1).padStart(2, '0')}
       </span>
 
@@ -205,7 +205,7 @@ function MobileStackCard({ offer, index }) {
         to={offer.href}
         className="group/link flex min-h-[44px] items-center gap-2 border-t border-white/8 pt-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1628]"
       >
-        <span className="font-brand-secondary text-[11px] font-semibold uppercase tracking-[0.14em] text-white/35 transition-colors group-hover/link:text-brand-secondary">
+        <span className="font-brand-secondary text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-white/35 transition-colors group-hover/link:text-brand-secondary">
           {offer.category}
         </span>
         <svg
@@ -277,7 +277,7 @@ function OfferingCard({ offer, index, inView }) {
         to={offer.href}
         className="group/link flex min-h-[44px] items-center gap-2 border-t border-white/8 pt-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1628]"
       >
-        <span className="font-brand-secondary text-[11px] font-semibold uppercase tracking-[0.14em] text-white/35 transition-colors group-hover/link:text-brand-secondary">
+        <span className="font-brand-secondary text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-white/35 transition-colors group-hover/link:text-brand-secondary">
           {offer.category}
         </span>
         <svg

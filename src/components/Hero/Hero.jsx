@@ -166,28 +166,28 @@ function NeuralCanvas() {
 
 function Hero() {
   return (
-    <section className="relative min-h-screen overflow-hidden">
+    <section className="relative flex min-h-screen flex-col overflow-hidden">
       {/* Neural network canvas */}
       <NeuralCanvas />
 
       {/* Teal glow — upper right */}
       <div
-        className="pointer-events-none absolute -top-20 right-0 h-[600px] w-[600px] opacity-18"
+        className="pointer-events-none absolute -top-20 right-0 h-[37.5rem] w-[37.5rem] opacity-18"
         style={{
           background: 'radial-gradient(circle at 70% 30%, #14b8a6 0%, transparent 60%)',
         }}
       />
       {/* Faint blue glow — lower left */}
       <div
-        className="pointer-events-none absolute bottom-0 -left-20 h-[400px] w-[400px] opacity-20"
+        className="pointer-events-none absolute bottom-0 -left-20 h-[25rem] w-[25rem] opacity-20"
         style={{
           background: 'radial-gradient(circle, #0a2463 0%, transparent 70%)',
         }}
       />
 
       {/* ── Main content ── */}
-      <div className="relative mx-auto max-w-7xl px-6 pt-32 pb-0 lg:px-8 lg:pt-40">
-        <div className="grid items-center gap-12 lg:grid-cols-[1fr_0.85fr]">
+      <div className="relative mx-auto flex w-full max-w-7xl px-6 pt-32 pb-0 lg:flex-1 lg:items-start lg:px-8 lg:pt-40">
+        <div className="grid w-full items-center gap-12 lg:grid-cols-[1fr_0.85fr]">
 
           {/* ── LEFT column ── */}
           <div className="flex flex-col gap-7">
@@ -221,7 +221,7 @@ function Hero() {
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.2 }}
-              className="max-w-[480px] font-brand-secondary text-base leading-relaxed text-white/50"
+              className="max-w-[30rem] font-brand-secondary text-base leading-relaxed text-white/50"
             >
               From RAG-powered AI assistants to full-stack SaaS products — we partner with
               founders and startups to ship production-ready software, fast.
@@ -305,18 +305,14 @@ function Hero() {
             Built with industry-leading tools
           </p>
 
-          {/* Fade masks */}
-          <div className="relative">
-            <div
-              className="pointer-events-none absolute left-0 top-0 bottom-0 z-10 w-20"
-              style={{ background: 'linear-gradient(to right, #060e1f, transparent)' }}
-            />
-            <div
-              className="pointer-events-none absolute right-0 top-0 bottom-0 z-10 w-20"
-              style={{ background: 'linear-gradient(to left, #060e1f, transparent)' }}
-            />
-
-            {/* Ticker */}
+          {/* Ticker — edges faded with a mask so they blend into any part of the gradient */}
+          <div
+            className="relative"
+            style={{
+              maskImage: 'linear-gradient(to right, transparent, #000 5rem, #000 calc(100% - 5rem), transparent)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent, #000 5rem, #000 calc(100% - 5rem), transparent)',
+            }}
+          >
             <div className="flex overflow-hidden">
               <div className="marquee-track flex shrink-0 gap-10 pr-10">
                 {[...LOGO_TICKER, ...LOGO_TICKER].map((name, i) => (
@@ -421,7 +417,7 @@ function TerminalMockup() {
               className="flex flex-1 flex-col items-center gap-0.5 rounded-lg border border-white/8 bg-white/3 py-3"
             >
               <span className="font-brand-primary text-lg text-brand-secondary">{m.value}</span>
-              <span className="font-brand-secondary text-[10px] font-semibold uppercase tracking-wider text-white/30">
+              <span className="font-brand-secondary text-[0.625rem] font-semibold uppercase tracking-wider text-white/30">
                 {m.label}
               </span>
             </div>
@@ -439,7 +435,7 @@ function TerminalMockup() {
         <span className="text-base">🤖</span>
         <div className="flex flex-col">
           <span className="font-brand-secondary text-xs font-semibold text-white/80 leading-tight">AI-Powered</span>
-          <span className="font-brand-secondary text-[10px] text-white/40 leading-tight">RAG Pipeline</span>
+          <span className="font-brand-secondary text-[0.625rem] text-white/40 leading-tight">RAG Pipeline</span>
         </div>
       </motion.div>
 
@@ -453,7 +449,7 @@ function TerminalMockup() {
         <span className="text-base">⚡</span>
         <div className="flex flex-col">
           <span className="font-brand-secondary text-xs font-semibold text-white/80 leading-tight">Ship in Weeks</span>
-          <span className="font-brand-secondary text-[10px] text-white/40 leading-tight">Not months</span>
+          <span className="font-brand-secondary text-[0.625rem] text-white/40 leading-tight">Not months</span>
         </div>
       </motion.div>
     </div>
