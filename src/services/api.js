@@ -10,6 +10,7 @@ async function request(path, options = {}) {
   })
 
   if (!response.ok) {
+    console.log("error")
     throw new Error(`Request failed: ${response.status}`)
   }
 
